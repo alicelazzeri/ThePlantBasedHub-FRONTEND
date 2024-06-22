@@ -82,6 +82,11 @@ body {
   position: absolute;
 }
 
+.dropdownItem {
+  font-weight: bold;
+  color: #00602f;
+}
+
 .accountIcon {
   margin-bottom: 0.3rem;
   font-size: 1.2rem;

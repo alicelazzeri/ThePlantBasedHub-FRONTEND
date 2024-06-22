@@ -93,9 +93,15 @@ const MyNav = () => {
                         <BsPersonCircle className="icon-hover accountIcon" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="dropdownMenu">
-                        <Dropdown.Item href="#register">Register</Dropdown.Item>
-                        <Dropdown.Item href="#login">Login</Dropdown.Item>
-                        <Dropdown.Item href="#reset-password">Reset Password</Dropdown.Item>
+                        <Dropdown.Item className="dropdownItem" href="#register">
+                          Register
+                        </Dropdown.Item>
+                        <Dropdown.Item className="dropdownItem" href="#login">
+                          Login
+                        </Dropdown.Item>
+                        <Dropdown.Item className="dropdownItem" href="#reset-password">
+                          Reset Password
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </a>
