@@ -1,5 +1,134 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Forum&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Italiana&display=swap");
+
+/* General CSS */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fefefe;
+}
+
+.scrollBtn {
+  position: fixed;
+  bottom: 16px;
+  right: 10px;
+  z-index: 99;
+  font-size: 3.5rem;
+  border: none;
+  outline: none;
+  color: #00602f;
+  border-radius: 30px;
+  background-color: transparent;
+  transition: color 0.5s ease;
+  opacity: 0;
+}
+
+/* Navbar */
+
+#navBar {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  font-family: "Italiana", sans-serif;
+}
+
+#navBar,
+.navbarOffcanvas {
+  background-color: #d4dbaf;
+}
+
+#navbarLogo {
+  margin-inline: 5px;
+}
+
+.navbarBrand {
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+.navLink {
+  font-family: "Italiana", serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: #00602f;
+  transition: color 0.5s ease;
+}
+
+.navLink:hover {
+  color: #fefefe;
+}
+
+.navLinks {
+  font-size: 1.2rem;
+}
+
+.dropdownMenu {
+  left: auto !important;
+  right: 0;
+  transform: translateX(0%);
+  position: absolute;
+}
+
+.accountIcon {
+  margin-bottom: 0.3rem;
+  font-size: 1.2rem;
+}
+
+.icon-hover-container .icon-hover {
+  color: #00602f;
+  transition: color 0.5s ease;
+}
+
+.icon-hover-container:hover .icon-hover,
+.icon-hover-container:focus .icon-hover,
+.icon-hover-container .dropdownMenu .dropdown-item:hover .icon-hover,
+.icon-hover-container .dropdownMenu .dropdown-item:focus .icon-hover {
+  color: #fefefe !important;
+}
+
+#dropdown-basic::after {
+  display: none !important;
+}
+
+.appTitle {
+  font-weight: bold;
+}
+
+.plantBasedSpan {
+  color: #00602f;
+}
+
+.titleOffCanvas {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #fefefe;
+}
+
+.subtitleOffCanvas {
+  font-family: "Forum", serif;
+  font-size: 1.2rem;
+}
+
+/* Mobile */
+
+@media (max-width: 425px) {
+  #navbarLogo {
+    margin: 0;
+  }
+  .title {
+    display: none;
+  }
+}
