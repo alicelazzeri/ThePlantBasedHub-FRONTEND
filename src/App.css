@@ -127,6 +127,92 @@ body {
   font-size: 1.2rem;
 }
 
+/* Footer */
+
+#footer {
+  background-color: #d4dbaf;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  width: 100%;
+}
+
+.footerTitle,
+.footerUnderTitle {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+}
+
+.footerTitle {
+  color: #00602f;
+}
+
+.footerUnderTitle {
+  color: #fefefe;
+}
+
+.footerLinks,
+.copyright {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.5s ease;
+}
+
+.footerLinks:hover {
+  color: #fefefe;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footerIcon {
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.footerIcon:hover {
+  color: #00602f;
+  cursor: pointer;
+}
+
+.hr {
+  color: #fefefe;
+}
+
+/* Not Found */
+
+.notFoundTitle {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #00602f;
+  font-size: 1.5rem;
+}
+
+.notFoundBody,
+.homeBtn {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.homeBtn {
+  border: none;
+  background-color: #00602f;
+  color: #fefefe;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.homeBtn:hover {
+  cursor: pointer;
+  background-color: #fefefe;
+  color: #00602f;
+  border: 1px solid #00602f;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {

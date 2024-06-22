@@ -3,7 +3,7 @@ import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
 
-const MyNav = () => {
+const PlantBasedNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const handleAccountClick = e => {
     e.stopPropagation();
@@ -115,4 +115,4 @@ const MyNav = () => {
   );
 };
 
-export default MyNav;
+export default PlantBasedNavbar;

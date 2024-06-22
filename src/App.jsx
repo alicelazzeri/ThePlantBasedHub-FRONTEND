@@ -3,18 +3,20 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import TopScrollBtn from "./components/TopScrollBtn";
-import MyNav from "./components/MyNav";
-import MyFooter from "./components/MyFooter";
+import PlantBasedFooter from "./components/PlantBasedFooter";
+import PlantBasedNavbar from "./components/PlantBasedNavbar";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <MyNav />
+        <PlantBasedNavbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-        <MyFooter />
+        <PlantBasedFooter />
       </BrowserRouter>
       <TopScrollBtn />
     </div>
