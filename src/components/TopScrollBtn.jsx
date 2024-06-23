@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiArrowCircleUp } from "react-icons/hi";
+import { RiArrowUpDoubleFill } from "react-icons/ri";
 
 const TopScrollBtn = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +33,7 @@ const TopScrollBtn = () => {
       className={`scrollBtn scroll-to-top-button ${isVisible ? "visible" : "hidden"} ${isAnimating ? "animating" : ""}`}
       onClick={handleScrollToTop}
     >
-      <HiArrowCircleUp />
+      <RiArrowUpDoubleFill />
     </button>
   );
 };

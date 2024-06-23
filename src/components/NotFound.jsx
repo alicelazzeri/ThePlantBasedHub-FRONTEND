@@ -1,4 +1,4 @@
-import logo from "../assets/images/the-plant-based-hub-2.png";
+import logo from "../assets/images/logo.png";
 import HomeButton from "./HomeButton";
 const NotFound = () => {
   return (
