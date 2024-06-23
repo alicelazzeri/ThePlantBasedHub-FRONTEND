@@ -5,8 +5,21 @@ import { BsPersonCircle } from "react-icons/bs";
 
 const PlantBasedNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
   const handleAccountClick = e => {
     e.stopPropagation();
+  };
+
+  const handleLogin = () => {
+    // Static login for now
+    setIsAuthenticated(true);
+    setUserName("Alice");
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserName("");
   };
 
   return (
@@ -93,15 +106,32 @@ const PlantBasedNavbar = () => {
                         <BsPersonCircle className="icon-hover accountIcon" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="dropdownMenu">
-                        <Dropdown.Item className="dropdownItem" href="#register">
-                          Register
-                        </Dropdown.Item>
-                        <Dropdown.Item className="dropdownItem" href="#login">
-                          Login
-                        </Dropdown.Item>
-                        <Dropdown.Item className="dropdownItem" href="#reset-password">
-                          Reset Password
-                        </Dropdown.Item>
+                        {!isAuthenticated ? (
+                          <>
+                            <Dropdown.Item className="dropdownItem" onClick={handleLogin} href="#register">
+                              Register
+                            </Dropdown.Item>
+                            <Dropdown.Item className="dropdownItem" onClick={handleLogin} href="#login">
+                              Login
+                            </Dropdown.Item>
+                            <Dropdown.Item className="dropdownItem" href="#reset-password">
+                              Reset Password
+                            </Dropdown.Item>
+                          </>
+                        ) : (
+                          <>
+                            <Dropdown.Item className="dropdownItem">Hi, {userName}</Dropdown.Item>
+                            <Dropdown.Item className="dropdownItem" href="#profile">
+                              Your Profile
+                            </Dropdown.Item>
+                            <Dropdown.Item className="dropdownItem" href="#favourites">
+                              Favourites
+                            </Dropdown.Item>
+                            <Dropdown.Item className="dropdownItem" onClick={handleLogout} href="#logout">
+                              Logout
+                            </Dropdown.Item>
+                          </>
+                        )}
                       </Dropdown.Menu>
                     </Dropdown>
                   </a>
