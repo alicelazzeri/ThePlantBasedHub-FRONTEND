@@ -4,7 +4,13 @@ import wallpaper from "../assets/images/plantbased.jpg";
 
 const AboutPage = () => {
   return (
-    <div className="text-center">
+    <div
+      className="text-center"
+      data-aos="fade-zoom-in"
+      data-aos-easing="linear"
+      data-aos-duration="1000"
+      data-aos-offset="200"
+    >
       <div>
         <Image className="pageWallpaper" src={wallpaper} fluid />
       </div>
@@ -95,8 +101,9 @@ const AboutPage = () => {
         <p>
           Together, we can make a positive difference in our own lives, the environment, and the lives of animals.
           <br />
-          Let's embark on this journey and explore the endless possibilities of plant-based cuisine. Start your journey
-          today and transform the way you cook and eat!
+          Let's embark on this journey and explore the endless possibilities of plant-based cuisine.
+          <br />
+          Start your journey today and transform the way you cook and eat!
         </p>
       </div>
     </div>

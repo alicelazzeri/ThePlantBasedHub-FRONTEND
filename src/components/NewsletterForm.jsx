@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import logo from "../assets/images/logo.png";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 

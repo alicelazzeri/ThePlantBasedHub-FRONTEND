@@ -4,7 +4,13 @@ import wallpaper from "../assets/images/soup.jpg";
 
 const RecipesPage = () => {
   return (
-    <div className="text-center">
+    <div
+      className="text-center"
+      data-aos="fade-zoom-in"
+      data-aos-easing="linear"
+      data-aos-duration="1000"
+      data-aos-offset="200"
+    >
       <div>
         <Image className="pageWallpaper" src={wallpaper} fluid />
       </div>

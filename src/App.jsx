@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage";
@@ -10,13 +12,19 @@ import RecipesPage from "./components/RecipesPage";
 import IngredientsPage from "./components/IngredientsPage";
 import AboutPage from "./components/AboutPage";
 import ContactsPage from "./components/ContactsPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   const handleLogin = () => {
     // Static login for now
@@ -30,7 +38,13 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      data-aos="fade-zoom-in"
+      data-aos-easing="linear"
+      data-aos-duration="1000"
+      data-aos-offset="200"
+    >
       <BrowserRouter>
         <PlantBasedNavbar
           isAuthenticated={isAuthenticated}

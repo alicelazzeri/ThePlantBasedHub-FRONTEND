@@ -109,7 +109,7 @@ const PlantBasedNavbar = () => {
                     href="#contacts"
                     onClick={() => setShowOffcanvas(false)}
                   >
-                    Contacts
+                    Contact Us
                   </Link>
 
                   <a className="navLink navLinks" onClick={() => setShowOffcanvas(false)}>

@@ -6,7 +6,7 @@ import PlantBasedNewsletter from "./PlantBasedNewsletter";
 
 const HomePage = ({ isAuthenticated, userName }) => {
   return (
-    <>
+    <div data-aos="fade-zoom-in" data-aos-easing="linear" data-aos-duration="1000" data-aos-offset="200">
       <HomePageCarousel />
       <div className="homeContainer">
         <Row>
@@ -184,7 +184,7 @@ const HomePage = ({ isAuthenticated, userName }) => {
           </Col>
         </Row>
       </div>
-    </>
+    </div>
   );
 };
 
