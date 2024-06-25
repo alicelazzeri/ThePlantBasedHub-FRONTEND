@@ -1,8 +1,10 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import HomePageCarousel from "./HomePageCarousel";
 import PlantBasedNewsletter from "./PlantBasedNewsletter";
 
-const HomePage = () => {
+const HomePage = ({ isAuthenticated, userName }) => {
   return (
     <>
       <HomePageCarousel />
@@ -11,7 +13,7 @@ const HomePage = () => {
           <Col className="text-center">
             <div>
               <h2 className="homeTitle my-5">
-                🌱 Welcome to The <span className="plantBasedSpan">Plant Based</span> Hub! 🌱
+                {isAuthenticated ? `🌱 Welcome back, ${userName}! 🌱` : "🌱 Welcome to The Plant Based Hub! 🌱"}
               </h2>
               <p className="px-5 mb-5">
                 Welcome to <strong>The Plant Based Hub</strong>, your ultimate destination for delicious and nutritious
@@ -184,6 +186,11 @@ const HomePage = () => {
       </div>
     </>
   );
+};
+
+HomePage.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default HomePage;

@@ -216,7 +216,8 @@ p {
 
 .homeBtn,
 .submitBtn,
-.modalBtn {
+.modalBtn,
+.registerLoginBtns {
   border: none;
   background-color: #00602f;
   color: #fefefe;
@@ -228,7 +229,8 @@ p {
 
 .homeBtn:hover,
 .submitBtn:hover,
-.modalBtn:hover {
+.modalBtn:hover,
+.registerLoginBtns:hover {
   cursor: pointer;
   background-color: #fefefe;
   color: #00602f;
@@ -331,6 +333,31 @@ p {
   text-align: start;
 }
 
+/* Recipes Page */
+
+.recipeTitle {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #00602f;
+}
+
+.recipeSubtitle {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+}
+
+.registerLoginBtns {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  margin-inline: 1rem;
+}
+
+.pageWallpaper {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {
@@ -354,5 +381,24 @@ p {
 
   .newsletterBody {
     margin-right: 0;
+  }
+  .recipeBody {
+    padding-inline: 0;
+  }
+
+  .btnContainer {
+    flex-direction: column;
+  }
+
+  .registerLoginBtns {
+    margin-inline: 1rem;
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+  .registerLoginBtns {
+    margin-inline: 1rem;
   }
 }

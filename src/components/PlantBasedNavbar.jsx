@@ -2,6 +2,7 @@ import { Container, Navbar, Nav, Offcanvas, Dropdown } from "react-bootstrap";
 import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const PlantBasedNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -27,7 +28,7 @@ const PlantBasedNavbar = () => {
       {["lg"].map(expand => (
         <Navbar id="navBar" key={expand} expand={expand} className="px-4 navbar-dark">
           <Container fluid>
-            <a className="navLink appTitle" href="#home">
+            <Link to="/" className="navLink appTitle" href="#home">
               <Navbar.Brand className="navbarBrand mt-2">
                 <span className="title">
                   THE <span className="plantBasedSpan">PLANT</span>
@@ -37,7 +38,7 @@ const PlantBasedNavbar = () => {
                   <span className="plantBasedSpan">BASED</span> HUB
                 </span>
               </Navbar.Brand>
-            </a>
+            </Link>
 
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -77,26 +78,41 @@ const PlantBasedNavbar = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3 gap-4 ms-1">
-                  <a className="navLink navLinks" href="#home" onClick={() => setShowOffcanvas(false)}>
+                  <Link to="/" className="navLink navLinks" href="#home" onClick={() => setShowOffcanvas(false)}>
                     Home
-                  </a>
-                  <a className="navLink navLinks" href="#recipes" onClick={() => setShowOffcanvas(false)}>
+                  </Link>
+                  <Link
+                    to="/recipes"
+                    className="navLink navLinks"
+                    href="#recipes"
+                    onClick={() => setShowOffcanvas(false)}
+                  >
                     Recipes
-                  </a>
+                  </Link>
 
-                  <a className="navLink navLinks" href="#ingredients" onClick={() => setShowOffcanvas(false)}>
+                  <Link
+                    to="/ingredients"
+                    className="navLink navLinks"
+                    href="#ingredients"
+                    onClick={() => setShowOffcanvas(false)}
+                  >
                     Ingredients
-                  </a>
+                  </Link>
 
-                  <a className="navLink navLinks" href="#about" onClick={() => setShowOffcanvas(false)}>
+                  <Link to="/about" className="navLink navLinks" href="#about" onClick={() => setShowOffcanvas(false)}>
                     About
-                  </a>
+                  </Link>
 
-                  <a className="navLink navLinks" href="#contacts" onClick={() => setShowOffcanvas(false)}>
+                  <Link
+                    to="/contacts"
+                    className="navLink navLinks"
+                    href="#contacts"
+                    onClick={() => setShowOffcanvas(false)}
+                  >
                     Contacts
-                  </a>
+                  </Link>
 
-                  <a className="navLink navLinks" href="#account" onClick={() => setShowOffcanvas(false)}>
+                  <a className="navLink navLinks" onClick={() => setShowOffcanvas(false)}>
                     <Dropdown onClick={handleAccountClick}>
                       <Dropdown.Toggle
                         variant="link"
@@ -109,26 +125,38 @@ const PlantBasedNavbar = () => {
                         {!isAuthenticated ? (
                           <>
                             <Dropdown.Item className="dropdownItem" onClick={handleLogin} href="#register">
-                              Register
+                              <Link className="navLink" to="/register">
+                                Register
+                              </Link>
                             </Dropdown.Item>
                             <Dropdown.Item className="dropdownItem" onClick={handleLogin} href="#login">
-                              Login
+                              <Link className="navLink" to="/login">
+                                Login
+                              </Link>
                             </Dropdown.Item>
                             <Dropdown.Item className="dropdownItem" href="#reset-password">
-                              Reset Password
+                              <Link className="navLink" to="/reset-password">
+                                Reset password
+                              </Link>
                             </Dropdown.Item>
                           </>
                         ) : (
                           <>
                             <Dropdown.Item className="dropdownItem">Hi, {userName}</Dropdown.Item>
                             <Dropdown.Item className="dropdownItem" href="#profile">
-                              Your Profile
+                              <Link className="navLink" to="/profile/:id">
+                                Your profile
+                              </Link>
                             </Dropdown.Item>
                             <Dropdown.Item className="dropdownItem" href="#favourites">
-                              Favourites
+                              <Link className="navLink" to="/favourites/:id">
+                                Favourites
+                              </Link>
                             </Dropdown.Item>
                             <Dropdown.Item className="dropdownItem" onClick={handleLogout} href="#logout">
-                              Logout
+                              <Link className="navLink" to="/logout">
+                                Logout
+                              </Link>
                             </Dropdown.Item>
                           </>
                         )}
