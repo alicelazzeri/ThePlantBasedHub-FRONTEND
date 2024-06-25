@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Col, Form, FormGroup, InputGroup, Modal, Row } from "react-bootstrap";
-import PropTypes from "prop-types"; // Corretto import di PropTypes
+import PropTypes from "prop-types";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import logo from "../assets/images/logo.png";
 
