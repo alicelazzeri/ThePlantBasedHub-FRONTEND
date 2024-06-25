@@ -15,6 +15,7 @@ import ContactsPage from "./components/ContactsPage";
 import { useEffect, useState } from "react";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +47,7 @@ function App() {
       data-aos-offset="200"
     >
       <BrowserRouter>
+        <ScrollToTop />
         <PlantBasedNavbar
           isAuthenticated={isAuthenticated}
           userName={userName}
