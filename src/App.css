@@ -358,6 +358,19 @@ p {
   object-fit: cover;
 }
 
+/* About Page */
+
+.aboutTitle {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #00602f;
+}
+
+.thankYouSpan {
+  font-family: "Italiana", sans-serif;
+  font-size: 1.5rem;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {
@@ -391,6 +404,10 @@ p {
   }
 
   .registerLoginBtns {
+    margin-inline: 1rem;
+  }
+
+  .about {
     margin-inline: 1rem;
   }
 }

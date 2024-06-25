@@ -1,6 +1,6 @@
 import { Carousel } from "react-bootstrap";
-import img1 from "../assets/images/vegan.jpg";
-import img2 from "../assets/images/plantbased.jpg";
+import img1 from "../assets/images/veg-pot.jpg";
+import img2 from "../assets/images/spices.jpg";
 import img3 from "../assets/images/veggies.jpg";
 import img4 from "../assets/images/carrots.jpg";
 import img5 from "../assets/images/veggs.jpg";
