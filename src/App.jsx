@@ -10,6 +10,7 @@ import PlantBasedNavbar from "./components/PlantBasedNavbar";
 import PlantBasedNavbarAuthenticated from "./components/PlantBasedNavbarAuth";
 import NotFound from "./components/NotFound";
 import RecipesPage from "./components/RecipesPage";
+import RecipesPageAuth from "./components/RecipesPageAuth";
 import IngredientsPage from "./components/IngredientsPage";
 import AboutPage from "./components/AboutPage";
 import ContactsPage from "./components/ContactsPage";
@@ -56,7 +57,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={userName} />} />
-          <Route path="/recipes" element={<RecipesPage />} />
+          <Route path="/recipes" element={isAuthenticated ? <RecipesPageAuth /> : <RecipesPage />} />
           <Route path="/ingredients" element={<IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
