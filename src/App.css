@@ -55,7 +55,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 50vh;
 }
 
 .loadingSpinner {
@@ -67,12 +67,12 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 50vh;
 }
 
 .spinner-image {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   margin: 3rem;
 }
 
@@ -402,6 +402,12 @@ p {
 .thankYouSpan {
   font-family: "Italiana", sans-serif;
   font-size: 1.5rem;
+}
+
+/* Register Page */
+
+.registerContainer {
+  margin: 5rem;
 }
 
 /* Mobile */

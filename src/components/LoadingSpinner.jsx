@@ -1,5 +1,5 @@
 //import { Spinner } from "react-bootstrap";
-import spinnerGif from "../assets/images/spinner.gif";
+import spinnerGif from "../assets/images/pan.gif";
 
 const LoadingSpinner = () => {
   return (
