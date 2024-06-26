@@ -63,6 +63,19 @@ p {
   animation-duration: 2s;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner-image {
+  width: 200px;
+  height: 200px;
+  margin: 3rem;
+}
+
 /* Navbar */
 
 #navBar {
