@@ -51,6 +51,18 @@ p {
   opacity: 0;
 }
 
+.loadingSpinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loadingSpinner {
+  color: #00602f;
+  animation-duration: 2s;
+}
+
 /* Navbar */
 
 #navBar {

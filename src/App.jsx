@@ -10,7 +10,6 @@ import PlantBasedNavbar from "./components/PlantBasedNavbar";
 import PlantBasedNavbarAuthenticated from "./components/PlantBasedNavbarAuth";
 import NotFound from "./components/NotFound";
 import RecipesPage from "./components/RecipesPage";
-import RecipesPageAuth from "./components/RecipesPageAuth";
 import IngredientsPage from "./components/IngredientsPage";
 import AboutPage from "./components/AboutPage";
 import ContactsPage from "./components/ContactsPage";
@@ -22,6 +21,7 @@ import ScrollToTop from "./components/ScrollToTop";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -41,13 +41,7 @@ function App() {
   };
 
   return (
-    <div
-      className="App"
-      data-aos="fade-zoom-in"
-      data-aos-easing="linear"
-      data-aos-duration="1000"
-      data-aos-offset="200"
-    >
+    <div className="App">
       <BrowserRouter>
         <ScrollToTop />
         {isAuthenticated ? (
@@ -57,7 +51,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={userName} />} />
-          <Route path="/recipes" element={isAuthenticated ? <RecipesPageAuth /> : <RecipesPage />} />
+          <Route path="/recipes" element={<RecipesPage />} />
           <Route path="/ingredients" element={<IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
