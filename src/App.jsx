@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage";
 import TopScrollBtn from "./components/TopScrollBtn";
 import PlantBasedFooter from "./components/PlantBasedFooter";
 import PlantBasedNavbar from "./components/PlantBasedNavbar";
+import PlantBasedNavbarAuthenticated from "./components/PlantBasedNavbarAuth";
 import NotFound from "./components/NotFound";
 import RecipesPage from "./components/RecipesPage";
 import IngredientsPage from "./components/IngredientsPage";
@@ -48,19 +49,18 @@ function App() {
     >
       <BrowserRouter>
         <ScrollToTop />
-        <PlantBasedNavbar
-          isAuthenticated={isAuthenticated}
-          userName={userName}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
-        />
+        {isAuthenticated ? (
+          <PlantBasedNavbarAuthenticated userName={userName} onLogout={handleLogout} />
+        ) : (
+          <PlantBasedNavbar onLogin={handleLogin} />
+        )}
         <Routes>
           <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={userName} />} />
           <Route path="/recipes" element={<RecipesPage />} />
           <Route path="/ingredients" element={<IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
-          <Route path="/register/" element={<RegisterPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

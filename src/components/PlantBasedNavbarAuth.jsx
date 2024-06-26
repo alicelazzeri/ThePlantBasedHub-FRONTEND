@@ -5,7 +5,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const PlantBasedNavbar = ({ onLogin }) => {
+const PlantBasedNavbarAuthenticated = ({ userName, onLogout }) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const handleAccountClick = e => {
     e.stopPropagation();
@@ -90,20 +90,19 @@ const PlantBasedNavbar = ({ onLogin }) => {
                       <BsPersonCircle className="icon-hover accountIcon" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdownMenu">
-                      <Dropdown.Item className="dropdownItem" onClick={onLogin}>
-                        <Link className="navLink" to="/login">
-                          Login
+                      <Dropdown.Item className="dropdownItem">Hi, {userName}</Dropdown.Item>
+                      <Dropdown.Item className="dropdownItem">
+                        <Link className="navLink" to="/profile/:id">
+                          Your profile
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/register">
-                          Register
+                        <Link className="navLink" to="/favourites/:id">
+                          Favourites
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/reset-password">
-                          Reset password
-                        </Link>
+                      <Dropdown.Item className="dropdownItem" onClick={onLogout}>
+                        Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -117,8 +116,9 @@ const PlantBasedNavbar = ({ onLogin }) => {
   );
 };
 
-PlantBasedNavbar.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+PlantBasedNavbarAuthenticated.propTypes = {
+  userName: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
-export default PlantBasedNavbar;
+export default PlantBasedNavbarAuthenticated;
