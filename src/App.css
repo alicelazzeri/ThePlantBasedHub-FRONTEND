@@ -407,7 +407,7 @@ p {
 /* Register Page */
 
 .registerContainer {
-  margin: 5rem;
+  margin: 3rem;
 }
 
 /* Mobile */
@@ -448,6 +448,9 @@ p {
 
   .about {
     margin-inline: 1rem;
+  }
+  .inputRegister {
+    margin-bottom: 1rem;
   }
 }
 
