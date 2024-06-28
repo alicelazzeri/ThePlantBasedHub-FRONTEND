@@ -119,6 +119,7 @@ p {
 }
 
 .dropdownMenu {
+  /*background-color: #cfd5b2;*/
   left: auto !important;
   right: 0;
   transform: translateX(0%);
@@ -128,6 +129,10 @@ p {
 .dropdownItem {
   font-weight: bold;
   color: #00602f;
+}
+
+.dropdownItem:hover {
+  background-color: #cfd5b2;
 }
 
 .accountIcon {
@@ -149,6 +154,13 @@ p {
 
 #dropdown-basic::after {
   display: none !important;
+}
+
+.userNameItem {
+  font-family: "Italiana", serif;
+  color: #00602f !important;
+  pointer-events: none;
+  background-color: transparent;
 }
 
 .appTitle {
