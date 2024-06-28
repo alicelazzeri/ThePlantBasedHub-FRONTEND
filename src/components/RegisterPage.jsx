@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { startLoading, stopLoading } from "../redux/actions/index.js";
 import LoadingSpinner from "./LoadingSpinner";
 import RegisterForm from "./RegisterForm.jsx";
+import logo from "../assets/images/logo.png";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const RegisterPage = () => {
         <LoadingSpinner />
       ) : (
         <div>
+          <img src={logo} className="rounded-circle mt-4" width={100} height={100} />
           <div>
             <h2 className="recipeTitle mt-4 mb-3">Join The Plant Based Hub</h2>
             <p className="px-5 my-3 recipeBody">

@@ -407,9 +407,23 @@ p {
 /* Register Page */
 
 .registerContainer {
-  margin: 3rem;
+  margin-bottom: 3rem;
 }
 
+/* Login Page */
+
+.formLink {
+  color: #00602f;
+  transition: color 0.5s ease;
+}
+
+.formLink:hover {
+  color: #d4dbaf;
+}
+
+.checkbox .form-check {
+  margin-left: 0;
+}
 /* Mobile */
 
 @media (max-width: 425px) {
@@ -459,5 +473,9 @@ p {
 @media (max-width: 768px) {
   .registerLoginBtns {
     margin-inline: 1rem;
+  }
+
+  .formData {
+    width: 100%;
   }
 }
