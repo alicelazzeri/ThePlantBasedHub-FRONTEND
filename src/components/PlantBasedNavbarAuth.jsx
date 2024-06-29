@@ -99,7 +99,7 @@ const PlantBasedNavbarAuthenticated = ({ userName, onLogout }) => {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/favourites/:id">
+                        <Link className="navLink" to="/favourites">
                           Favourites
                         </Link>
                       </Dropdown.Item>

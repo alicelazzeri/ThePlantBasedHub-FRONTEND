@@ -101,7 +101,7 @@ const PlantBasedNavbar = ({ onLogin }) => {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="#">
+                        <Link className="navLink" to="/reset-password">
                           Reset password
                         </Link>
                       </Dropdown.Item>

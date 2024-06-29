@@ -534,6 +534,10 @@ p {
   color: #00602f;
 }
 
+.profileInput {
+  font-family: "Raleway", sans-serif;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {
