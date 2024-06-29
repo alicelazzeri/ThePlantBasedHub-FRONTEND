@@ -98,7 +98,7 @@ const LoginForm = () => {
                 </p>
                 <p>
                   Forgot your password?{" "}
-                  <a className="formLink" href="/reset-password">
+                  <a className="formLink" href="#">
                     Reset it here
                   </a>
                 </p>

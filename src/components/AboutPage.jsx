@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Image from "react-bootstrap/Image";
+import RegisterLoginButtons from "./RegisterLoginButtons";
 import wallpaper from "../assets/images/plantbased.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { startLoading, stopLoading } from "../redux/actions/index.js";
@@ -31,10 +32,10 @@ const AboutPage = () => {
       ) : (
         <div
           className="text-center"
-          data-aos="fade-zoom-in"
-          data-aos-easing="linear"
-          data-aos-duration="2000"
-          data-aos-offset="200"
+          // data-aos="fade-zoom-in"
+          // data-aos-easing="linear"
+          // data-aos-duration="2000"
+          // data-aos-offset="200"
         >
           <div>
             <Image className="pageWallpaper" src={wallpaper} fluid />
@@ -133,6 +134,7 @@ const AboutPage = () => {
               Start your journey today and transform the way you cook and eat!
             </p>
           </div>
+          <RegisterLoginButtons />
         </div>
       )}
     </div>

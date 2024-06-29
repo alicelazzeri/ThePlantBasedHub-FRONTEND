@@ -90,11 +90,11 @@ const PlantBasedNavbarAuthenticated = ({ userName, onLogout }) => {
                       <BsPersonCircle className="icon-hover accountIcon" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdownMenu">
-                      <Dropdown.Item disabled className="dropdownItem userNameItem">
+                      <Dropdown.Item as={Link} to="/profile" disabled className="dropdownItem userNameItem">
                         Hi, {userName}
                       </Dropdown.Item>
                       <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/profile/:id">
+                        <Link className="navLink" to="/profile">
                           Your profile
                         </Link>
                       </Dropdown.Item>

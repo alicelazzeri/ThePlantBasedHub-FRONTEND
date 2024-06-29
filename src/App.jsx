@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import ScrollToTop from "./components/ScrollToTop";
+import UserProfile from "./components/UserProfile"; // Importa il componente UserProfile
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -57,6 +58,7 @@ function App() {
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<UserProfile userName={userName} />} /> {/* Static route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
         <PlantBasedFooter />
