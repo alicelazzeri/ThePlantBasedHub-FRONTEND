@@ -26,7 +26,7 @@ const FavouritesTable = () => {
   ];
 
   return (
-    <Table className="favTable" responsive="sm">
+    <Table hover className="favTable" responsive="sm">
       <thead className="tHead">
         <tr>
           <th></th>
