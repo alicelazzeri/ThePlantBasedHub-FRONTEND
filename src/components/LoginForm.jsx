@@ -1,50 +1,36 @@
 import { useState } from "react";
-import { Button, Col, Form, Row, Modal, FloatingLabel, Container } from "react-bootstrap";
+import { Button, Col, Form, Row, FloatingLabel, Container, Toast, ToastContainer } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "../redux/actions/index.js";
+import { loginUser } from "../redux/actions/index";
 import LoadingSpinner from "./LoadingSpinner";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [validated, setValidated] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
+  const navigate = useNavigate();
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      dispatch(startLoading());
+      const formData = new FormData(event.target);
+      const loginData = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+      };
+      await dispatch(loginUser(loginData));
+      setShowToast(true);
       setTimeout(() => {
-        dispatch(stopLoading());
-        setModalShow(true);
-      }, 2000);
+        setShowToast(false);
+        navigate("/");
+      }, 1000);
     }
     setValidated(true);
-  };
-
-  const SubmissionModal = props => {
-    return (
-      <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Login Successful!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Welcome back! You have successfully logged in.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
-  SubmissionModal.propTypes = {
-    onHide: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired,
   };
 
   return (
@@ -59,7 +45,7 @@ const LoginForm = () => {
                 <Row className="mb-3">
                   <Form.Group as={Col} xs={12} controlId="validationCustomEmail">
                     <FloatingLabel controlId="floatingEmail" label="Email" className="formData">
-                      <Form.Control required type="email" placeholder="Email" />
+                      <Form.Control required type="email" placeholder="Email" name="email" />
                       <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
                     </FloatingLabel>
                   </Form.Group>
@@ -67,20 +53,14 @@ const LoginForm = () => {
                 <Row className="mb-3">
                   <Form.Group as={Col} xs={12} controlId="validationCustomPassword">
                     <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
-                      <Form.Control required type="password" placeholder="Password" />
+                      <Form.Control required type="password" placeholder="Password" name="password" />
                       <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
                     </FloatingLabel>
                   </Form.Group>
                 </Row>
                 <Row className="mb-3 justify-content-center">
                   <Form.Group as={Col} xs={12} className="d-flex align-items-center">
-                    <Form.Check
-                      className="me-2 checkbox"
-                      required
-                      label="Remember me"
-                      feedback="You must agree before submitting."
-                      feedbackType="invalid"
-                    />
+                    <Form.Check className="me-2 checkbox" label="Remember me" feedbackType="invalid" />
                   </Form.Group>
                 </Row>
                 <div className="text-center">
@@ -103,7 +83,14 @@ const LoginForm = () => {
                   </a>
                 </p>
               </div>
-              <SubmissionModal show={modalShow} onHide={() => setModalShow(false)} />
+              <ToastContainer position="top-center" className="p-3">
+                <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
+                  <Toast.Header>
+                    <strong className="me-auto">The Plant Based Hub</strong>
+                  </Toast.Header>
+                  <Toast.Body>Login Successful! Welcome back.</Toast.Body>
+                </Toast>
+              </ToastContainer>
             </Col>
           </Row>
         </Container>

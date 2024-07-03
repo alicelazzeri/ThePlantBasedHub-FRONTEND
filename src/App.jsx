@@ -7,23 +7,28 @@ import HomePage from "./components/HomePage";
 import TopScrollBtn from "./components/TopScrollBtn";
 import PlantBasedFooter from "./components/PlantBasedFooter";
 import PlantBasedNavbar from "./components/PlantBasedNavbar";
-import PlantBasedNavbarAuthenticated from "./components/PlantBasedNavbarAuth";
 import NotFound from "./components/NotFound";
 import RecipesPage from "./components/RecipesPage";
 import IngredientsPage from "./components/IngredientsPage";
 import AboutPage from "./components/AboutPage";
 import ContactsPage from "./components/ContactsPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import ScrollToTop from "./components/ScrollToTop";
 import UserProfile from "./components/UserProfile";
 import FavouritesPage from "./components/FavouritesPage";
 import ResetPasswordPage from "./components/ResetPasswordPage";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "./redux/actions";
+import PlantBasedNavbarAuth from "./components/PlantBasedNavbarAuth";
+import RecipesPageAuth from "./components/RecipesPageAuth";
+import IngredientsPageAuth from "./components/IngredientsPageAuth";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userName, setUserName] = useState("");
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(state => state.auth.user);
 
   useEffect(() => {
     AOS.init({
@@ -32,15 +37,8 @@ function App() {
     });
   }, []);
 
-  const handleLogin = () => {
-    // Static login for now
-    setIsAuthenticated(true);
-    setUserName("Alice");
-  };
-
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    setUserName("");
+    dispatch(logout());
   };
 
   return (
@@ -48,19 +46,19 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         {isAuthenticated ? (
-          <PlantBasedNavbarAuthenticated userName={userName} onLogout={handleLogout} />
+          <PlantBasedNavbarAuth userName={user ? user.name : ""} onLogout={handleLogout} />
         ) : (
-          <PlantBasedNavbar onLogin={handleLogin} />
+          <PlantBasedNavbar />
         )}
         <Routes>
-          <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={userName} />} />
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/ingredients" element={<IngredientsPage />} />
+          <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={user ? user.name : ""} />} />
+          <Route path="/recipes" element={isAuthenticated ? <RecipesPageAuth /> : <RecipesPage />} />
+          <Route path="/ingredients" element={isAuthenticated ? <IngredientsPageAuth /> : <IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<UserProfile userName={userName} />} /> {/* Static route */}
+          <Route path="/profile" element={<UserProfile userName={user ? user.name : ""} />} />
           <Route path="/favourites" element={<FavouritesPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<NotFound />} />

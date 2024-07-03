@@ -5,7 +5,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const PlantBasedNavbarAuthenticated = ({ userName, onLogout }) => {
+const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const handleAccountClick = e => {
     e.stopPropagation();
@@ -118,9 +118,9 @@ const PlantBasedNavbarAuthenticated = ({ userName, onLogout }) => {
   );
 };
 
-PlantBasedNavbarAuthenticated.propTypes = {
+PlantBasedNavbarAuth.propTypes = {
   userName: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 
-export default PlantBasedNavbarAuthenticated;
+export default PlantBasedNavbarAuth;

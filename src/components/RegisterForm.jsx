@@ -1,55 +1,43 @@
 import { useState } from "react";
-import { Button, Col, Form, Row, Modal, FloatingLabel, Container } from "react-bootstrap";
+import { Button, Col, Form, Row, FloatingLabel, Container, Toast, ToastContainer } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "../redux/actions/index.js";
+import { registerUser } from "../redux/actions/index";
 import LoadingSpinner from "./LoadingSpinner";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [validated, setValidated] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [isAdminChecked, setIsAdminChecked] = useState(false); // Stato per il checkbox admin
+  const [showToast, setShowToast] = useState(false);
+  const [isAdminChecked, setIsAdminChecked] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
+  const navigate = useNavigate();
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      dispatch(startLoading());
+      const formData = new FormData(event.target);
+      const userData = {
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+      };
+      await dispatch(registerUser(userData, isAdminChecked));
+      setShowToast(true);
       setTimeout(() => {
-        dispatch(stopLoading());
-        setModalShow(true);
-      }, 2000);
+        setShowToast(false);
+        navigate("/");
+      }, 1000);
     }
     setValidated(true);
   };
 
-  const SubmissionModal = props => {
-    return (
-      <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Registration Successful!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Thank you for registering! Please check your email to confirm your registration.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
-  SubmissionModal.propTypes = {
-    onHide: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired,
-  };
-
   return (
-    <div className="registerContainer d-flex justify-content-center align-items-center min-vh-100">
+    <div className="registerContainer d-flex justify-content-center align-items-center mt-5">
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -58,47 +46,45 @@ const RegisterForm = () => {
             <Col xs={12} md={8} lg={6}>
               <Form className="text-center" noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="mb-3 justify-content-center">
-                  <Col xs={12} md={8}>
+                  <Col xs={12}>
                     <Form.Group controlId="validationCustom01">
                       <FloatingLabel controlId="floatingFirstName" label="First name" className="formData">
-                        <Form.Control required type="text" placeholder="First name" />
+                        <Form.Control required type="text" placeholder="First name" name="firstName" />
                         <Form.Control.Feedback type="invalid">Please provide a first name.</Form.Control.Feedback>
                       </FloatingLabel>
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className="mb-3 justify-content-center">
-                  <Col xs={12} md={8}>
+                  <Col xs={12}>
                     <Form.Group controlId="validationCustom02">
                       <FloatingLabel controlId="floatingLastName" label="Last name" className="formData">
-                        <Form.Control required type="text" placeholder="Last name" />
+                        <Form.Control required type="text" placeholder="Last name" name="lastName" />
                         <Form.Control.Feedback type="invalid">Please provide a last name.</Form.Control.Feedback>
                       </FloatingLabel>
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className="mb-3 justify-content-center">
-                  <Col xs={12} md={8}>
+                  <Col xs={12}>
                     <Form.Group controlId="validationCustomEmail">
                       <FloatingLabel controlId="floatingEmail" label="Email" className="formData">
-                        <Form.Control required type="email" placeholder="Email" />
+                        <Form.Control required type="email" placeholder="Email" name="email" />
                         <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
                       </FloatingLabel>
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row className="mb-3 justify-content-center">
-                  <Col xs={12} md={8}>
-                    <Form.Group controlId="validationCustomPassword">
-                      <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
-                        <Form.Control required type="password" placeholder="Password" />
-                        <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
-                      </FloatingLabel>
-                    </Form.Group>
-                  </Col>
+                  <Form.Group as={Col} xs={12} controlId="validationCustomPassword">
+                    <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
+                      <Form.Control required type="password" placeholder="Password" name="password" />
+                      <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
+                    </FloatingLabel>
+                  </Form.Group>
                 </Row>
                 <Row className="justify-content-center">
-                  <Col xs={12} md={8} className="d-flex align-items-center checkbox">
+                  <Col xs={12} className="d-flex align-items-center checkbox">
                     <Form.Check
                       className="me-2"
                       type="checkbox"
@@ -109,7 +95,7 @@ const RegisterForm = () => {
                   </Col>
                 </Row>
                 <Row className="mb-3 justify-content-center">
-                  <Col xs={12} md={8} className="d-flex align-items-center checkbox">
+                  <Col xs={12} className="d-flex align-items-center checkbox">
                     <Form.Check
                       className="me-2"
                       required
@@ -125,7 +111,14 @@ const RegisterForm = () => {
                   </Button>
                 </div>
               </Form>
-              <SubmissionModal show={modalShow} onHide={() => setModalShow(false)} />
+              <ToastContainer position="top-center" className="p-3">
+                <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
+                  <Toast.Header>
+                    <strong className="me-auto">The Plant Based Hub</strong>
+                  </Toast.Header>
+                  <Toast.Body>Registration Successful! Please check your email.</Toast.Body>
+                </Toast>
+              </ToastContainer>
             </Col>
           </Row>
         </Container>

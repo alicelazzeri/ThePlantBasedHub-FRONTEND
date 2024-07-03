@@ -3,12 +3,21 @@ import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/actions/index";
 
-const PlantBasedNavbar = ({ onLogin }) => {
+const PlantBasedNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+
   const handleAccountClick = e => {
     e.stopPropagation();
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setShowOffcanvas(false);
   };
 
   return (
@@ -81,32 +90,49 @@ const PlantBasedNavbar = ({ onLogin }) => {
                   <Link to="/contacts" className="navLink navLinks" onClick={() => setShowOffcanvas(false)}>
                     Contact Us
                   </Link>
-                  <Dropdown onClick={handleAccountClick}>
-                    <Dropdown.Toggle
-                      variant="link"
-                      id="dropdown-basic"
-                      className="no-bg navLink p-0 icon-hover-container"
-                    >
-                      <BsPersonCircle className="icon-hover accountIcon" />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="dropdownMenu">
-                      <Dropdown.Item className="dropdownItem" onClick={onLogin}>
-                        <Link className="navLink" to="/login">
-                          Login
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/register">
-                          Register
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem">
-                        <Link className="navLink" to="/reset-password">
-                          Reset password
-                        </Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  {user ? (
+                    <Dropdown onClick={handleAccountClick}>
+                      <Dropdown.Toggle
+                        variant="link"
+                        id="dropdown-basic"
+                        className="no-bg navLink p-0 icon-hover-container"
+                      >
+                        <BsPersonCircle className="icon-hover accountIcon" />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="dropdownMenu">
+                        <Dropdown.Item className="dropdownItem">
+                          <Link className="navLink" to="/profile">
+                            Profile
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item className="dropdownItem" onClick={handleLogout}>
+                          Logout
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  ) : (
+                    <Dropdown onClick={handleAccountClick}>
+                      <Dropdown.Toggle
+                        variant="link"
+                        id="dropdown-basic"
+                        className="no-bg navLink p-0 icon-hover-container"
+                      >
+                        <BsPersonCircle className="icon-hover accountIcon" />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="dropdownMenu">
+                        <Dropdown.Item className="dropdownItem" onClick={() => setShowOffcanvas(false)}>
+                          <Link className="navLink" to="/login">
+                            Login
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item className="dropdownItem" onClick={() => setShowOffcanvas(false)}>
+                          <Link className="navLink" to="/register">
+                            Register
+                          </Link>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  )}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
@@ -115,10 +141,6 @@ const PlantBasedNavbar = ({ onLogin }) => {
       ))}
     </>
   );
-};
-
-PlantBasedNavbar.propTypes = {
-  onLogin: PropTypes.func.isRequired,
 };
 
 export default PlantBasedNavbar;

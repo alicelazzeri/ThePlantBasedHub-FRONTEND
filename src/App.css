@@ -420,6 +420,18 @@ p {
   margin-bottom: 3rem;
 }
 
+.passwordBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.custom-input-height {
+  height: 55px;
+}
+
+.custom-floating-label {
+  transition: all 0.2s ease-in-out;
+}
 /* Login Page */
 
 .formLink {
@@ -520,13 +532,17 @@ p {
 }
 
 .passwordContainer {
+  position: relative;
   display: flex;
   align-items: center;
 }
 
 .passwordToggleIcon {
-  margin-left: -30px;
+  position: absolute;
+  right: 20px;
+
   cursor: pointer;
+  color: #00602f;
 }
 
 .profileLabel {
@@ -715,7 +731,10 @@ p {
   }
 
   .formData {
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
     width: 100%;
+    height: 80px;
   }
   .coverImage {
     height: 180px;
