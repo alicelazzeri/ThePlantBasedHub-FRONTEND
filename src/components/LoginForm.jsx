@@ -1,16 +1,27 @@
-import { useState } from "react";
-import { Button, Col, Form, Row, FloatingLabel, Container, Toast, ToastContainer } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Button, Col, Form, Row, FloatingLabel, Container, Toast, ToastContainer, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/actions/index";
 import LoadingSpinner from "./LoadingSpinner";
 import { useNavigate } from "react-router-dom";
+import { PiSealWarningDuotone } from "react-icons/pi";
 
 const LoginForm = () => {
   const [validated, setValidated] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
+  const error = useSelector(state => state.auth.error);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && !error && showToast) {
+      setTimeout(() => {
+        setShowToast(false);
+        navigate("/");
+      }, 1000);
+    }
+  }, [isLoading, error, showToast, navigate]);
 
   const handleSubmit = async event => {
     const form = event.currentTarget;
@@ -25,10 +36,6 @@ const LoginForm = () => {
       };
       await dispatch(loginUser(loginData));
       setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-        navigate("/");
-      }, 1000);
     }
     setValidated(true);
   };
@@ -43,6 +50,12 @@ const LoginForm = () => {
             <Col xs={12} md={8} lg={6}>
               <Form className="text-center" noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="mb-3">
+                  {error && (
+                    <Alert variant="danger" className="errorAlert">
+                      <PiSealWarningDuotone className="errorIcon" />
+                      {error}
+                    </Alert>
+                  )}
                   <Form.Group as={Col} xs={12} controlId="validationCustomEmail">
                     <FloatingLabel controlId="floatingEmail" label="Email" className="formData">
                       <Form.Control required type="email" placeholder="Email" name="email" />
@@ -88,7 +101,7 @@ const LoginForm = () => {
                   <Toast.Header>
                     <strong className="me-auto">The Plant Based Hub</strong>
                   </Toast.Header>
-                  <Toast.Body>Login Successful! Welcome back.</Toast.Body>
+                  <Toast.Body>{error ? error : "Login Successful! Welcome back."}</Toast.Body>
                 </Toast>
               </ToastContainer>
             </Col>

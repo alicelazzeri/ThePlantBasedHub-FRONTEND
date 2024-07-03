@@ -7,8 +7,6 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGOUT = "LOGOUT";
 
-// Loading spinner
-
 export const startLoading = () => ({
   type: START_LOADING,
 });
@@ -17,11 +15,9 @@ export const stopLoading = () => ({
   type: STOP_LOADING,
 });
 
-// Register and login
-
-export const registerSuccess = user => ({
+export const registerSuccess = data => ({
   type: REGISTER_SUCCESS,
-  payload: user,
+  payload: data,
 });
 
 export const registerFailure = error => ({
@@ -29,17 +25,15 @@ export const registerFailure = error => ({
   payload: error,
 });
 
-export const loginSuccess = token => ({
+export const loginSuccess = data => ({
   type: LOGIN_SUCCESS,
-  payload: token,
+  payload: data,
 });
 
 export const loginFailure = error => ({
   type: LOGIN_FAILURE,
   payload: error,
 });
-
-// Logout
 
 export const logout = () => ({
   type: LOGOUT,
@@ -62,7 +56,7 @@ export const registerUser = (userData, isAdmin) => async dispatch => {
     }
     const data = await response.json();
     dispatch(registerSuccess(data));
-    dispatch(loginSuccess(data.token));
+    dispatch(loginSuccess(data));
   } catch (error) {
     dispatch(registerFailure(error.message));
   } finally {
@@ -81,10 +75,11 @@ export const loginUser = loginData => async dispatch => {
       body: JSON.stringify(loginData),
     });
     if (!response.ok) {
-      throw new Error("Login failed");
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Login failed");
     }
     const data = await response.json();
-    dispatch(loginSuccess(data.token));
+    dispatch(loginSuccess(data));
   } catch (error) {
     dispatch(loginFailure(error.message));
   } finally {

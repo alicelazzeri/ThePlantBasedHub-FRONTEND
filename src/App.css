@@ -447,6 +447,15 @@ p {
   margin-left: 0;
 }
 
+.errorAlert {
+  font-family: "Raleway", sans-serif;
+}
+
+.errorIcon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
 /* Profile Page */
 
 .userProfileContainer {

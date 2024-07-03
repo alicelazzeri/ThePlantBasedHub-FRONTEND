@@ -46,19 +46,22 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         {isAuthenticated ? (
-          <PlantBasedNavbarAuth userName={user ? user.name : ""} onLogout={handleLogout} />
+          <PlantBasedNavbarAuth userName={user ? user.firstName : ""} onLogout={handleLogout} />
         ) : (
           <PlantBasedNavbar />
         )}
         <Routes>
-          <Route path="/" element={<HomePage isAuthenticated={isAuthenticated} userName={user ? user.name : ""} />} />
+          <Route
+            path="/"
+            element={<HomePage isAuthenticated={isAuthenticated} userName={user ? user.firstName : ""} />}
+          />
           <Route path="/recipes" element={isAuthenticated ? <RecipesPageAuth /> : <RecipesPage />} />
           <Route path="/ingredients" element={isAuthenticated ? <IngredientsPageAuth /> : <IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<UserProfile userName={user ? user.name : ""} />} />
+          <Route path="/profile" element={<UserProfile userName={user ? user.firstName : ""} />} />
           <Route path="/favourites" element={<FavouritesPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<NotFound />} />

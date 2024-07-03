@@ -10,11 +10,17 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
-      return { ...state, user: action.payload, token: action.payload.token, isAuthenticated: true, error: null };
+      return { ...state, user: action.payload.user, token: action.payload.token, isAuthenticated: true, error: null };
     case REGISTER_FAILURE:
       return { ...state, error: action.payload };
     case LOGIN_SUCCESS:
-      return { ...state, token: action.payload, isAuthenticated: true, error: null };
+      return {
+        ...state,
+        user: { firstName: action.payload.firstName, lastName: action.payload.lastName, email: action.payload.email },
+        token: action.payload.accessToken,
+        isAuthenticated: true,
+        error: null,
+      };
     case LOGIN_FAILURE:
       return { ...state, error: action.payload };
     case LOGOUT:
