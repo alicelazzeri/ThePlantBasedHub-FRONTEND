@@ -2,13 +2,20 @@ import { Container, Navbar, Nav, Offcanvas, Dropdown } from "react-bootstrap";
 import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate qui
 import PropTypes from "prop-types";
 
 const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const navigate = useNavigate(); // Importa useNavigate qui
+
   const handleAccountClick = e => {
     e.stopPropagation();
+  };
+
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate("/"); // Redirect to homepage after logout
   };
 
   return (
@@ -103,7 +110,7 @@ const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
                           Favourites
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem navLink" onClick={onLogout}>
+                      <Dropdown.Item className="dropdownItem navLink" onClick={handleLogoutClick}>
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>

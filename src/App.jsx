@@ -29,6 +29,7 @@ function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
+  //const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init({
@@ -39,6 +40,7 @@ function App() {
 
   const handleLogout = () => {
     dispatch(logout());
+    //navigate("/");
   };
 
   return (
