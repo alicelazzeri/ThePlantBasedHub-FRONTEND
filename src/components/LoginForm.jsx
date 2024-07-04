@@ -12,16 +12,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
   const error = useSelector(state => state.auth.error);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // Add this line to get authentication status
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading && !error && showToast) {
-      setTimeout(() => {
-        setShowToast(false);
-        navigate("/");
-      }, 1000);
+    if (isAuthenticated) {
+      navigate("/");
     }
-  }, [isLoading, error, showToast, navigate]);
+  }, [isAuthenticated, navigate]); // Use isAuthenticated for navigation
 
   const handleSubmit = async event => {
     const form = event.currentTarget;
