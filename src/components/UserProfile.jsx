@@ -4,15 +4,14 @@ import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import wallpaper from "../assets/images/pattern.jpg";
 import unavailable from "../assets/images/unavailable.png";
 import { MdAddAPhoto } from "react-icons/md";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ResetFavouritesButtons from "./ResetFavouritesButtons";
 import LoadingSpinner from "./LoadingSpinner";
 import { fetchUserProfile, uploadAvatar, deleteAvatar } from "../redux/actions";
+import { BsTrash3Fill } from "react-icons/bs";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   const { userProfile, isLoading } = useSelector(state => state.userProfile);
-  const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(unavailable);
 
   useEffect(() => {
@@ -25,12 +24,10 @@ const UserProfile = () => {
   useEffect(() => {
     if (userProfile && userProfile.avatarUrl) {
       setProfileImage(userProfile.avatarUrl);
+    } else {
+      setProfileImage(unavailable);
     }
   }, [userProfile]);
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const handleProfileImageChange = event => {
     const file = event.target.files[0];
@@ -67,18 +64,22 @@ const UserProfile = () => {
                   onChange={handleProfileImageChange}
                   style={{ display: "none" }}
                 />
+                {userProfile && userProfile.avatarUrl && (
+                  <Button className="deleteAvatarBtn" onClick={handleDeleteAvatar}>
+                    <BsTrash3Fill className="trashIcon" />
+                  </Button>
+                )}
               </div>
             </div>
-            {userProfile && userProfile.avatarUrl && (
-              <Button onClick={handleDeleteAvatar} className="mt-2">
-                Delete Avatar
-              </Button>
-            )}
           </div>
           {userProfile && (
             <>
               <h1 className="userName">
-                {userProfile.firstName} {userProfile.lastName}
+                Hi there,{" "}
+                <span className="plantBasedSpan">
+                  {userProfile.firstName} {userProfile.lastName}
+                </span>
+                ! 🥦 👋🏻
               </h1>
               <Row className="justify-content-center mt-4">
                 <Col md={8}>
@@ -115,26 +116,6 @@ const UserProfile = () => {
                       </Form.Label>
                       <Col sm={9}>
                         <Form.Control type="email" defaultValue={userProfile.email} readOnly className="profileInput" />
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                      <Form.Label column sm={3} className="profileLabel">
-                        Password
-                      </Form.Label>
-                      <Col sm={9}>
-                        <div className="passwordContainer">
-                          <Form.Control
-                            type={showPassword ? "text" : "password"}
-                            defaultValue="password123"
-                            readOnly
-                            className="profileInput"
-                          />
-                          {showPassword ? (
-                            <FaEyeSlash onClick={toggleShowPassword} className="passwordToggleIcon" />
-                          ) : (
-                            <FaEye onClick={toggleShowPassword} className="passwordToggleIcon" />
-                          )}
-                        </div>
                       </Col>
                     </Form.Group>
                     <ResetFavouritesButtons />

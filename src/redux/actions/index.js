@@ -123,10 +123,12 @@ export const loginUser = loginData => async dispatch => {
       body: JSON.stringify(loginData),
     });
     if (!response.ok) {
-      const errorData = await parseJSON(response);
+      const errorData = await response.json();
       throw new Error(errorData.message || "Login failed");
     }
-    const data = await parseJSON(response);
+    const data = await response.json();
+    console.log("Login response data:", data);
+    localStorage.setItem("id", data.userId);
     localStorage.setItem("token", data.accessToken);
     dispatch(loginSuccess(data));
   } catch (error) {
@@ -490,22 +492,23 @@ export const fetchRecipesByTotalMinerals = minerals => async dispatch => {
 // User Profile
 export const fetchUserProfile = id => async dispatch => {
   dispatch(startLoading());
+  const token = localStorage.getItem("token");
+  console.log("Fetching user profile with token:", token);
+
   try {
     const response = await fetch(`${API}/users/${id}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getUserProfileSuccess(null));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
-      throw new Error(errorData.message || "Failed to fetch user profile");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getUserProfileSuccess(data));
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user profile");
     }
+
+    const data = await response.json();
+    dispatch(getUserProfileSuccess(data));
   } catch (error) {
     dispatch(getUserProfileFailure(error.message));
   } finally {
@@ -515,6 +518,9 @@ export const fetchUserProfile = id => async dispatch => {
 
 export const uploadAvatar = (id, avatar) => async dispatch => {
   dispatch(startLoading());
+  const token = localStorage.getItem("token");
+  console.log("Uploading avatar with token:", token);
+
   try {
     const formData = new FormData();
     formData.append("avatar", avatar);
@@ -522,14 +528,15 @@ export const uploadAvatar = (id, avatar) => async dispatch => {
     const response = await fetch(`${API}/users/${id}/avatar/upload`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
       body: formData,
     });
+
     if (!response.ok) {
-      const errorData = await parseJSON(response);
-      throw new Error(errorData.message || "Failed to upload avatar");
+      throw new Error("Failed to upload avatar");
     }
+
     const avatarUrl = await response.text();
     dispatch(uploadAvatarSuccess(avatarUrl));
   } catch (error) {
@@ -541,17 +548,21 @@ export const uploadAvatar = (id, avatar) => async dispatch => {
 
 export const deleteAvatar = (id, publicId) => async dispatch => {
   dispatch(startLoading());
+  const token = localStorage.getItem("token");
+  console.log("Deleting avatar with token:", token);
+
   try {
     const response = await fetch(`${API}/users/${id}/avatar/delete?publicId=${publicId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     });
+
     if (!response.ok) {
-      const errorData = await parseJSON(response);
-      throw new Error(errorData.message || "Failed to delete avatar");
+      throw new Error("Failed to delete avatar");
     }
+
     dispatch(deleteAvatarSuccess());
   } catch (error) {
     dispatch(deleteAvatarFailure(error.message));
