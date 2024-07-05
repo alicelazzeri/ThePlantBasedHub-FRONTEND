@@ -505,6 +505,64 @@ p {
   color: #00602f !important;
 }
 
+/* Webkit Browsers (Chrome, Safari, etc.) */
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #00602f;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Firefox */
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #00602f;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* IE */
+
+input[type="range"]::-ms-thumb {
+  width: 15px;
+  height: 15px;
+  background: #00602f;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: #cfd5b2;
+  border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: #cfd5b2;
+  border-radius: 5px;
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: #cfd5b2;
+  border-radius: 5px;
+  border-color: transparent;
+  color: transparent;
+}
+
 .offcanvas-header {
   background-color: #d4dbaf;
 }

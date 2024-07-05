@@ -246,9 +246,10 @@ const RecipesPageAuth = () => {
                 </Col>
               </Row>
             </Form>
-            <Button className="filtersBtn mb-5" onClick={handleOffcanvasToggle}>
+            <Button className="filtersBtn mb-4" onClick={handleOffcanvasToggle}>
               Advanced Filters
             </Button>
+            <hr />
             <Offcanvas show={showOffcanvas} onHide={handleOffcanvasToggle}>
               <Offcanvas.Header closeButton className="offcanvas-header">
                 <Offcanvas.Title className="offcanvas-title">Advanced Filters</Offcanvas.Title>
@@ -270,7 +271,6 @@ const RecipesPageAuth = () => {
                               value={proteinRange.min}
                               onChange={handleRangeChange(setProteinRange, "min")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                           <Col>
@@ -281,7 +281,6 @@ const RecipesPageAuth = () => {
                               value={proteinRange.max}
                               onChange={handleRangeChange(setProteinRange, "max")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                         </Row>
@@ -301,7 +300,6 @@ const RecipesPageAuth = () => {
                               value={carbohydrateRange.min}
                               onChange={handleRangeChange(setCarbohydrateRange, "min")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                           <Col>
@@ -312,7 +310,6 @@ const RecipesPageAuth = () => {
                               value={carbohydrateRange.max}
                               onChange={handleRangeChange(setCarbohydrateRange, "max")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                         </Row>
@@ -334,7 +331,6 @@ const RecipesPageAuth = () => {
                               value={fatRange.min}
                               onChange={handleRangeChange(setFatRange, "min")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                           <Col>
@@ -345,7 +341,6 @@ const RecipesPageAuth = () => {
                               value={fatRange.max}
                               onChange={handleRangeChange(setFatRange, "max")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                         </Row>
@@ -365,7 +360,6 @@ const RecipesPageAuth = () => {
                               value={fiberRange.min}
                               onChange={handleRangeChange(setFiberRange, "min")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                           <Col>
@@ -376,7 +370,6 @@ const RecipesPageAuth = () => {
                               value={fiberRange.max}
                               onChange={handleRangeChange(setFiberRange, "max")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                         </Row>
@@ -398,7 +391,6 @@ const RecipesPageAuth = () => {
                               value={sugarRange.min}
                               onChange={handleRangeChange(setSugarRange, "min")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                           <Col>
@@ -409,7 +401,6 @@ const RecipesPageAuth = () => {
                               value={sugarRange.max}
                               onChange={handleRangeChange(setSugarRange, "max")}
                               className="range-input"
-                              style={{ color: "#00602f" }}
                             />
                           </Col>
                         </Row>
