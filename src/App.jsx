@@ -30,18 +30,13 @@ function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
-  //const navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
+    AOS.init({ duration: 1000, once: true });
   }, []);
 
   const handleLogout = () => {
     dispatch(logout());
-    //navigate("/");
   };
 
   return (
@@ -65,7 +60,7 @@ function App() {
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<UserProfile userName={user ? user.firstName : ""} />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/favourites" element={<FavouritesPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<NotFound />} />

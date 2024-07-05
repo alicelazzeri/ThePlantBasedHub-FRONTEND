@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Image from "react-bootstrap/Image";
 import RegisterLoginButtons from "./RegisterLoginButtons";
-import wallpaper from "../assets/images/plantbased.jpg";
+import wallpaper from "../assets/images/vegan.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { startLoading, stopLoading } from "../redux/actions/index.js";
 import LoadingSpinner from "./LoadingSpinner";
@@ -40,11 +40,7 @@ const AboutPage = () => {
           <div>
             <Image className="pageWallpaper" src={wallpaper} fluid />
           </div>
-          <hr className="mt-0" />
-          <hr />
           <h2 className="recipeTitle about mt-4 mb-3">ABOUT THE PLANT BASED HUB</h2>
-          <hr />
-          <hr />
           <div className="text-start m-5">
             <h3 className="aboutTitle">Our Story</h3>
             <p>

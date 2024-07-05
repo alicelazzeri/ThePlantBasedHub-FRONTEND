@@ -41,11 +41,7 @@ const ContactsPage = () => {
             <Image className="pageWallpaper" src={wallpaper} fluid />
           </div>
           <div className="text-center">
-            <hr className="mt-0" />
-            <hr />
             <h2 className="recipeTitle mt-4 mb-3">CONTACT US</h2>
-            <hr />
-            <hr />
             <h5 className="recipeSubtitle mb-4">
               <strong>We'd like to hear from you!</strong>
             </h5>

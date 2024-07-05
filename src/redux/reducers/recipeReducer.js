@@ -20,6 +20,7 @@ import {
 const initialState = {
   isLoading: false,
   recipes: [],
+  recipe: null,
   error: null,
 };
 
@@ -34,6 +35,7 @@ const recipesReducer = (state = initialState, action) => {
     case GET_RECIPES_FAILURE:
       return { ...state, error: action.payload, isLoading: false };
     case GET_RECIPE_BY_ID:
+      return { ...state, recipe: action.payload, error: null, isLoading: false };
     case GET_RECIPES_BY_RECIPE_NAME:
     case GET_RECIPES_BY_RECIPE_CATEGORY:
     case GET_RECIPES_BY_INGREDIENT_NAME:

@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 const RecipesPageAuth = () => {
   const dispatch = useDispatch();
-  const { recipes, isLoading } = useSelector(state => state.recipes);
+  const { recipes, isLoading, error } = useSelector(state => state.recipes);
   const [filter, setFilter] = useState("");
   const [expandedRecipes, setExpandedRecipes] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -120,7 +120,7 @@ const RecipesPageAuth = () => {
     if (searchType === "name") {
       dispatch(fetchRecipesByRecipeName(searchTerm));
     } else {
-      dispatch(fetchRecipesByIngredientName(ingredientBadges));
+      dispatch(fetchRecipesByIngredientName(ingredientBadges.join(",")));
     }
   };
 
@@ -137,8 +137,8 @@ const RecipesPageAuth = () => {
     dispatch(fetchRecipesByTotalFats(fatRange.min, fatRange.max));
     dispatch(fetchRecipesByTotalFibers(fiberRange.min, fiberRange.max));
     dispatch(fetchRecipesByTotalSugars(sugarRange.min, sugarRange.max));
-    dispatch(fetchRecipesByTotalVitamins(vitaminBadges));
-    dispatch(fetchRecipesByTotalMinerals(mineralBadges));
+    dispatch(fetchRecipesByTotalVitamins(vitaminBadges.join(",")));
+    dispatch(fetchRecipesByTotalMinerals(mineralBadges.join(",")));
     setShowOffcanvas(false);
   };
 
@@ -156,6 +156,8 @@ const RecipesPageAuth = () => {
     <div className="text-center">
       {isLoading ? (
         <LoadingSpinner />
+      ) : error ? (
+        <div className="alert alert-danger">{error}</div>
       ) : (
         <>
           <div>
@@ -275,7 +277,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={proteinRange.min}
-                              onChange={handleRangeChange(setProteinRange, "min")}
+                              onChange={handleRangeChange(setProteinRange)}
                               className="range-input"
                             />
                           </Col>
@@ -285,7 +287,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={proteinRange.max}
-                              onChange={handleRangeChange(setProteinRange, "max")}
+                              onChange={handleRangeChange(setProteinRange)}
                               className="range-input"
                             />
                           </Col>
@@ -304,7 +306,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={carbohydrateRange.min}
-                              onChange={handleRangeChange(setCarbohydrateRange, "min")}
+                              onChange={handleRangeChange(setCarbohydrateRange)}
                               className="range-input"
                             />
                           </Col>
@@ -314,7 +316,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={carbohydrateRange.max}
-                              onChange={handleRangeChange(setCarbohydrateRange, "max")}
+                              onChange={handleRangeChange(setCarbohydrateRange)}
                               className="range-input"
                             />
                           </Col>
@@ -335,7 +337,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={fatRange.min}
-                              onChange={handleRangeChange(setFatRange, "min")}
+                              onChange={handleRangeChange(setFatRange)}
                               className="range-input"
                             />
                           </Col>
@@ -345,7 +347,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={fatRange.max}
-                              onChange={handleRangeChange(setFatRange, "max")}
+                              onChange={handleRangeChange(setFatRange)}
                               className="range-input"
                             />
                           </Col>
@@ -364,7 +366,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={fiberRange.min}
-                              onChange={handleRangeChange(setFiberRange, "min")}
+                              onChange={handleRangeChange(setFiberRange)}
                               className="range-input"
                             />
                           </Col>
@@ -374,7 +376,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={fiberRange.max}
-                              onChange={handleRangeChange(setFiberRange, "max")}
+                              onChange={handleRangeChange(setFiberRange)}
                               className="range-input"
                             />
                           </Col>
@@ -395,7 +397,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={sugarRange.min}
-                              onChange={handleRangeChange(setSugarRange, "min")}
+                              onChange={handleRangeChange(setSugarRange)}
                               className="range-input"
                             />
                           </Col>
@@ -405,7 +407,7 @@ const RecipesPageAuth = () => {
                               min={0}
                               max={100}
                               value={sugarRange.max}
-                              onChange={handleRangeChange(setSugarRange, "max")}
+                              onChange={handleRangeChange(setSugarRange)}
                               className="range-input"
                             />
                           </Col>
