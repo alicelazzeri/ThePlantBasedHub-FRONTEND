@@ -246,9 +246,8 @@ export const fetchRecipesByRecipeCategory = recipeCategory => async dispatch => 
 
 // Fetch recipes by ingredient name
 export const fetchRecipesByIngredientName = ingredientName => async dispatch => {
-  const token = localStorage.getItem("token"); // Ensure token is fetched from localStorage
-  console.log("Fetching recipes by ingredient name with token:", token); // Debugging line
-  dispatch(startLoading());
+  const token = localStorage.getItem("token");
+  console.log("Fetching recipes by ingredient name with token:", token);
   try {
     const response = await fetch(`${API}/recipes/ingredient/${ingredientName}`, {
       method: "GET",
@@ -301,6 +300,8 @@ export const fetchRecipesByIngredientCategory = ingredientCategory => async disp
 // Fetch recipes by total proteins
 export const fetchRecipesByTotalProteins = (minProteins, maxProteins) => async dispatch => {
   dispatch(startLoading());
+  const token = localStorage.getItem("token");
+  console.log("Fetching recipes by proteins with token:", token);
   try {
     const response = await fetch(
       `${API}/recipes/total-proteins?minProteins=${minProteins}&maxProteins=${maxProteins}`,
