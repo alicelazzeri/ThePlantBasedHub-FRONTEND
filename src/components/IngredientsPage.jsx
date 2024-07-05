@@ -40,11 +40,7 @@ const IngredientsPage = () => {
             <Image className="pageWallpaper" src={wallpaper} fluid />
           </div>
           <div>
-            <hr className="mt-0" />
-            <hr />
             <h2 className="recipeTitle mt-4 mb-3">OUR INGREDIENTS</h2>
-            <hr />
-            <hr />
             <h5 className="recipeSubtitle  mb-4">
               <strong>Discover the Essentials of Plant-Based Cooking</strong>
             </h5>

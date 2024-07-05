@@ -40,11 +40,7 @@ const RecipesPage = () => {
             <Image className="pageWallpaper" src={wallpaper} fluid />
           </div>
           <div>
-            <hr className="mt-0" />
-            <hr />
             <h2 className="recipeTitle mt-4 mb-3">OUR RECIPES</h2>
-            <hr />
-            <hr />
             <h5 className="recipeSubtitle mb-4">
               <strong>Discover a world of delicious Vegan Recipes</strong>
             </h5>

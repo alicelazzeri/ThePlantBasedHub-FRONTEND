@@ -251,7 +251,9 @@ p {
 .notFoundBody,
 .homeBtn,
 .submitBtn,
-.modalBtn {
+.modalBtn,
+.viewRecipeBtn,
+.filtersBtn {
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
   font-weight: bold;
@@ -260,7 +262,9 @@ p {
 .homeBtn,
 .submitBtn,
 .modalBtn,
-.registerLoginBtns {
+.registerLoginBtns,
+.viewRecipeBtn,
+.filtersBtn {
   border: none;
   background-color: #00602f;
   color: #fefefe;
@@ -273,7 +277,9 @@ p {
 .homeBtn:hover,
 .submitBtn:hover,
 .modalBtn:hover,
-.registerLoginBtns:hover {
+.registerLoginBtns:hover,
+.viewRecipeBtn:hover,
+.filtersBtn:hover {
   cursor: pointer;
   background-color: #fefefe;
   color: #00602f;
@@ -396,9 +402,155 @@ p {
 }
 
 .pageWallpaper {
-  height: 300px;
+  height: 150px;
   width: 100%;
   object-fit: cover;
+}
+
+.recipeCardImg {
+  object-fit: cover;
+}
+
+.favouritesBtn {
+  color: #5e2121;
+  font-size: 2rem;
+}
+
+.recipeCard {
+  border: 1px solid #d4dbaf;
+  height: 650px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.recipeCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.text-truncate-custom {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.readMore {
+  font-size: 0.8rem;
+  max-width: 170px;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  text-decoration: none;
+  text-align: center;
+  color: #fefefe;
+  border: none;
+  background-color: #d4dbaf !important;
+  padding-block: 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recipeFilter {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.inputContainer {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.searchInput {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inputBar {
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.searchBtn,
+.addBtn {
+  background-color: #00602f;
+  border: none;
+  margin-left: 0.5rem;
+  color: #fefefe;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+}
+
+.ingredientBadge {
+  cursor: pointer;
+  background-color: #6c757d;
+  color: #fefefe;
+  font-size: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.ingredientBadge:hover {
+  background-color: #343a40;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.range-input {
+  margin-bottom: 1rem;
+  color: #00602f !important;
+}
+
+.offcanvas-header {
+  background-color: #d4dbaf;
+}
+
+.offcanvas-title {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #00602f;
+}
+
+.offcanvas-body {
+  padding: 2rem;
+}
+
+.recipeFilterLabel {
+  font-size: 12rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #00602f;
+  font-family: "Italiana", serif;
+  text-align: center;
+}
+
+.inputIcon {
+  color: #00602f;
+  font-size: 1.3rem;
+}
+
+.inputBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.filtersBtn {
+  margin-top: -1rem;
+}
+
+.ingredientBadge {
+  font-size: 0.9rem !important;
+  font-family: "Raleway", sans-serif;
+  background-color: #d4dbaf !important;
+  color: #000000 !important;
+}
+
+.filterLabel {
+  font-family: "Raleway", sans-serif;
 }
 
 /* About Page */
@@ -432,6 +584,7 @@ p {
 .custom-floating-label {
   transition: all 0.2s ease-in-out;
 }
+
 /* Login Page */
 
 .formLink {
@@ -729,6 +882,10 @@ p {
   .ratingBtn.me-3 {
     margin-right: 0 !important;
     margin-bottom: 0.5rem;
+  }
+
+  .cardBtnContainer {
+    flex-direction: column;
   }
 }
 
