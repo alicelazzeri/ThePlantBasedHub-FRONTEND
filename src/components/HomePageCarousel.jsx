@@ -1,9 +1,10 @@
 import { Carousel } from "react-bootstrap";
-import img1 from "../assets/images/veg-pot.jpg";
-import img2 from "../assets/images/spices.jpg";
-import img3 from "../assets/images/veggies.jpg";
+import img1 from "../assets/images/veggies.jpg";
+import img2 from "../assets/images/groceries.jpg";
+import img3 from "../assets/images/fruitsandveggies.jpg";
 import img4 from "../assets/images/carrots.jpg";
-import img5 from "../assets/images/veggs.jpg";
+import img5 from "../assets/images/peas.jpg";
+import img6 from "../assets/images/veg-pot.jpg";
 
 const HomePageCarousel = () => {
   return (
@@ -22,6 +23,9 @@ const HomePageCarousel = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img src={img5} className="slideImage" alt="Fifth slide" />
+      </Carousel.Item>
+      <Carousel.Item>
+        <img src={img6} className="slideImage" alt="Sixth slide" />
       </Carousel.Item>
     </Carousel>
   );
