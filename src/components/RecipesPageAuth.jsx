@@ -19,6 +19,7 @@ import {
 import LoadingSpinner from "./LoadingSpinner";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const RecipesPageAuth = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const RecipesPageAuth = () => {
   const [fatRange, setFatRange] = useState({ min: 0, max: 100 });
   const [fiberRange, setFiberRange] = useState({ min: 0, max: 100 });
   const [sugarRange, setSugarRange] = useState({ min: 0, max: 100 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllRecipes());
@@ -144,6 +146,10 @@ const RecipesPageAuth = () => {
 
   const handleOffcanvasToggle = () => {
     setShowOffcanvas(!showOffcanvas);
+  };
+
+  const handleViewRecipeClick = recipeId => {
+    navigate(`/recipe/${recipeId}`);
   };
 
   return (
@@ -503,7 +509,9 @@ const RecipesPageAuth = () => {
                           {expandedRecipes[recipe.id] ? "Read less" : "Read more"}
                         </Badge>
                       </p>
-                      <Button className="viewRecipeBtn">View Recipe</Button>
+                      <Button className="viewRecipeBtn" onClick={() => handleViewRecipeClick(recipe.id)}>
+                        View Recipe
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>

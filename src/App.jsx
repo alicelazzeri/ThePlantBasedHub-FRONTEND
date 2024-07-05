@@ -24,6 +24,7 @@ import { logout } from "./redux/actions";
 import PlantBasedNavbarAuth from "./components/PlantBasedNavbarAuth";
 import RecipesPageAuth from "./components/RecipesPageAuth";
 import IngredientsPageAuth from "./components/IngredientsPageAuth";
+import SingleRecipePage from "./components/SingleRecipePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function App() {
             element={<HomePage isAuthenticated={isAuthenticated} userName={user ? user.firstName : ""} />}
           />
           <Route path="/recipes" element={isAuthenticated ? <RecipesPageAuth /> : <RecipesPage />} />
+          <Route path="/recipe/:recipeId" element={<SingleRecipePage />} />
           <Route path="/ingredients" element={isAuthenticated ? <IngredientsPageAuth /> : <IngredientsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />

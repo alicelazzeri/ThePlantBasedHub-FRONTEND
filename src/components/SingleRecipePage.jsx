@@ -1,5 +1,8 @@
-const singleRecipePage = () => {
-  return <div>single page recipe </div>;
+import { useParams } from "react-router-dom";
+
+const SingleRecipePage = () => {
+  const { recipeId } = useParams();
+  return <div>Single Recipe Page for Recipe ID: {recipeId}</div>;
 };
 
-export default singleRecipePage;
+export default SingleRecipePage;
