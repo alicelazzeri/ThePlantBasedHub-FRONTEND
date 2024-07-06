@@ -902,6 +902,12 @@ input[type="range"]::-ms-track {
   list-style-position: outside;
 }
 
+.recipeSub {
+  font-family: "Italiana", serif;
+  color: #00602f;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 /* Mobile */
 
 @media (max-width: 425px) {

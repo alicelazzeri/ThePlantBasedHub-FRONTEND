@@ -33,7 +33,7 @@ const SingleRecipePage = () => {
 
   return (
     <Container>
-      <Row className="my-4 d-flex align-items-center">
+      <Row className="my-5 d-flex align-items-center">
         <Col md={6}>
           <Image className="recipePic" src={recipe.imageUrl} fluid />
         </Col>
@@ -43,19 +43,36 @@ const SingleRecipePage = () => {
           <p>
             <Badge className="recipeCategory">{formatRecipeCategory(recipe.recipeCategory)}</Badge>
           </p>
-          <p className="d-flex">
-            <GiAlarmClock className="recipeIcon me-1" />
-            <span className="recipeSpan">Preparation time</span>: {recipe.preparationTime} minutes
-          </p>
-          <p>
-            <IoIosRestaurant className="recipeIcon me-1" />
-            Servings: {recipe.numberOfServings}
-          </p>
-          <p>
-            <MdOutlineLocalFireDepartment className="recipeIcon me-1" />
-            Calories per Serving: {recipe.caloriesPerServing} kcal
-          </p>
-          <p>
+          <div className="d-flex">
+            <p className="recipeSub me-3">
+              <strong>Preparation time</strong>
+            </p>
+            <p className="d-flex">
+              <GiAlarmClock className="recipeIcon me-1" />
+              {recipe.preparationTime} minutes
+            </p>
+          </div>
+          <div className="d-flex">
+            <p className="recipeSub me-3">
+              <strong>Servings</strong>
+            </p>
+            <p className="d-flex">
+              <IoIosRestaurant className="recipeIcon me-1" />
+              {recipe.numberOfServings}
+            </p>
+          </div>
+
+          <div className="d-flex">
+            <p className="recipeSub me-3">
+              <strong>Calories per Serving</strong>
+            </p>
+            <p className="d-flex">
+              <MdOutlineLocalFireDepartment className="recipeIcon me-1" />
+              {recipe.caloriesPerServing} kcal
+            </p>
+          </div>
+
+          <p className="recipeSub">
             <strong>Ingredients</strong>
           </p>
           <ul className="ingredientList">
@@ -66,7 +83,7 @@ const SingleRecipePage = () => {
             ))}
           </ul>
 
-          <p>
+          <p className="recipeSub">
             <strong>Instructions</strong>
           </p>
           <p>
