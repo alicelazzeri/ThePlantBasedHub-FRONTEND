@@ -24,8 +24,10 @@ const UserProfile = () => {
   useEffect(() => {
     if (userProfile && userProfile.avatarUrl) {
       setProfileImage(userProfile.avatarUrl);
+      localStorage.setItem("profileImage", userProfile.avatarUrl);
     } else {
       setProfileImage(unavailable);
+      localStorage.removeItem("profileImage");
     }
   }, [userProfile]);
 
@@ -77,7 +79,11 @@ const UserProfile = () => {
           {userProfile && (
             <>
               <h1 className="userName">
-                {userProfile.firstName} {userProfile.lastName}
+                Hi there,{" "}
+                <span className="plantBasedSpan">
+                  {userProfile.firstName} {userProfile.lastName}
+                </span>
+                ! 🥦👋🏻
               </h1>
               <Row className="justify-content-center mt-4">
                 <Col md={8}>
@@ -116,9 +122,7 @@ const UserProfile = () => {
                         <Form.Control type="email" defaultValue={userProfile.email} readOnly className="profileInput" />
                       </Col>
                     </Form.Group>
-                    <div className="d-flex justify-content-between">
-                      <ResetFavouritesButtons />
-                    </div>
+                    <ResetFavouritesButtons />
                   </Form>
                 </Col>
               </Row>
