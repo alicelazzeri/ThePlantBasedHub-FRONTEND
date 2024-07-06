@@ -868,6 +868,40 @@ input[type="range"]::-ms-track {
   color: #600000;
 }
 
+/* Single Recipe Page */
+
+.recipePic {
+  width: 500px;
+  height: 700px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #d4dbaf;
+}
+
+.recipeCategory {
+  background-color: #d4dbaf !important;
+  font-size: 0.9rem;
+}
+
+.recipeIcon {
+  font-size: 1.5rem;
+  color: #00602f;
+}
+
+.instructionsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  list-style-position: initial;
+}
+
+.ingredientList {
+  font-family: "Raleway", sans-serif;
+  padding-left: 0;
+  margin-left: 1rem;
+  list-style-position: outside;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {
@@ -961,6 +995,11 @@ input[type="range"]::-ms-track {
 
   .cardBtnContainer {
     flex-direction: column;
+  }
+
+  .recipePic {
+    width: 400px;
+    height: 200px;
   }
 }
 

@@ -179,6 +179,9 @@ const RecipesPageAuth = () => {
                       <option value="BREAKFAST">Breakfast</option>
                       <option value="LUNCH">Lunch</option>
                       <option value="DINNER">Dinner</option>
+                      <option value="SIDE_DISHES">Side Dishes</option>
+                      <option value="ONE_POT_MEALS">One-Pot Meals</option>
+                      <option value="SNACKS">Snacks</option>
                       <option value="DESSERT">Dessert</option>
                     </Form.Control>
                   </Form.Group>

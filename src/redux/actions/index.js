@@ -83,16 +83,6 @@ export const uploadAvatarFailure = error => ({ type: UPLOAD_AVATAR_FAILURE, payl
 export const deleteAvatarSuccess = () => ({ type: DELETE_AVATAR_SUCCESS });
 export const deleteAvatarFailure = error => ({ type: DELETE_AVATAR_FAILURE, payload: error });
 
-// Helper function to handle JSON parsing safely
-
-const parseJSON = async response => {
-  try {
-    return await response.json();
-  } catch (error) {
-    return {}; // Return empty object if parsing fails
-  }
-};
-
 // Register
 export const registerUser = (userData, isAdmin) => async dispatch => {
   dispatch(startLoading());
@@ -103,7 +93,9 @@ export const registerUser = (userData, isAdmin) => async dispatch => {
       body: JSON.stringify(userData),
     });
     if (!response.ok) throw new Error("Registration failed");
-    const data = await parseJSON(response);
+    const data = await response.json();
+    localStorage.setItem("id", data.userId);
+    localStorage.setItem("token", data.accessToken);
     dispatch(registerSuccess(data));
     dispatch(loginSuccess(data));
   } catch (error) {
@@ -127,7 +119,6 @@ export const loginUser = loginData => async dispatch => {
       throw new Error(errorData.message || "Login failed");
     }
     const data = await response.json();
-    console.log("Login response data:", data);
     localStorage.setItem("id", data.userId);
     localStorage.setItem("token", data.accessToken);
     dispatch(loginSuccess(data));
@@ -140,11 +131,10 @@ export const loginUser = loginData => async dispatch => {
 
 // Fetch all recipes
 export const fetchAllRecipes = () => async (dispatch, getState) => {
-  const state = getState();
-  const token = state.auth.token;
-
   dispatch(startLoading());
   try {
+    const state = getState();
+    const token = state.auth.token;
     const response = await fetch(`${API}/recipes?page=0&size=100`, {
       method: "GET",
       headers: {
@@ -152,15 +142,12 @@ export const fetchAllRecipes = () => async (dispatch, getState) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getAllRecipesSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getAllRecipesSuccess(data.content));
     }
+    const data = await response.json();
+    dispatch(getAllRecipesSuccess(data.content));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -178,15 +165,12 @@ export const fetchRecipeById = id => async dispatch => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipeByIdSuccess(null));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipe");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipeByIdSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipeByIdSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -204,15 +188,12 @@ export const fetchRecipesByRecipeName = recipeName => async dispatch => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByRecipeNameSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByRecipeNameSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByRecipeNameSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -230,15 +211,12 @@ export const fetchRecipesByRecipeCategory = recipeCategory => async dispatch => 
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByRecipeCategorySuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByRecipeCategorySuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByRecipeCategorySuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -248,8 +226,7 @@ export const fetchRecipesByRecipeCategory = recipeCategory => async dispatch => 
 
 // Fetch recipes by ingredient name
 export const fetchRecipesByIngredientName = ingredientName => async dispatch => {
-  const token = localStorage.getItem("token");
-  console.log("Fetching recipes by ingredient name with token:", token);
+  dispatch(startLoading());
   try {
     const response = await fetch(`${API}/recipes/ingredient/${ingredientName}`, {
       method: "GET",
@@ -257,15 +234,12 @@ export const fetchRecipesByIngredientName = ingredientName => async dispatch => 
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByIngredientNameSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByIngredientNameSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByIngredientNameSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -283,15 +257,12 @@ export const fetchRecipesByIngredientCategory = ingredientCategory => async disp
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByIngredientCategorySuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByIngredientCategorySuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByIngredientCategorySuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -302,8 +273,6 @@ export const fetchRecipesByIngredientCategory = ingredientCategory => async disp
 // Fetch recipes by total proteins
 export const fetchRecipesByTotalProteins = (minProteins, maxProteins) => async dispatch => {
   dispatch(startLoading());
-  const token = localStorage.getItem("token");
-  console.log("Fetching recipes by proteins with token:", token);
   try {
     const response = await fetch(
       `${API}/recipes/total-proteins?minProteins=${minProteins}&maxProteins=${maxProteins}`,
@@ -314,15 +283,12 @@ export const fetchRecipesByTotalProteins = (minProteins, maxProteins) => async d
         },
       }
     );
-    if (response.status === 204) {
-      dispatch(getRecipesByProteinsSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByProteinsSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByProteinsSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -343,15 +309,12 @@ export const fetchRecipesByTotalCarbohydrates = (minCarbohydrates, maxCarbohydra
         },
       }
     );
-    if (response.status === 204) {
-      dispatch(getRecipesByCarbohydratesSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByCarbohydratesSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByCarbohydratesSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -369,15 +332,12 @@ export const fetchRecipesByTotalFats = (minFats, maxFats) => async dispatch => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByFatsSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByFatsSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByFatsSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -395,15 +355,12 @@ export const fetchRecipesByTotalFibers = (minFibers, maxFibers) => async dispatc
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByFibersSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByFibersSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByFibersSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -421,15 +378,12 @@ export const fetchRecipesByTotalSugars = (minSugars, maxSugars) => async dispatc
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesBySugarsSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesBySugarsSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesBySugarsSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -447,15 +401,12 @@ export const fetchRecipesByTotalVitamins = vitamins => async dispatch => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByVitaminsSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByVitaminsSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByVitaminsSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
@@ -473,15 +424,12 @@ export const fetchRecipesByTotalMinerals = minerals => async dispatch => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    if (response.status === 204) {
-      dispatch(getRecipesByMineralsSuccess([]));
-    } else if (!response.ok) {
-      const errorData = await parseJSON(response);
+    if (!response.ok) {
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipes");
-    } else {
-      const data = await parseJSON(response);
-      dispatch(getRecipesByMineralsSuccess(data));
     }
+    const data = await response.json();
+    dispatch(getRecipesByMineralsSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
   } finally {
