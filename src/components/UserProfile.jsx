@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Image, Form } from "react-bootstrap";
 import wallpaper from "../assets/images/pattern.jpg";
 import unavailable from "../assets/images/unavailable.png";
 import { MdAddAPhoto } from "react-icons/md";
@@ -40,6 +40,8 @@ const UserProfile = () => {
     if (userProfile.avatarUrl) {
       const publicId = userProfile.avatarUrl.split("/").pop();
       dispatch(deleteAvatar(userProfile.id, publicId));
+      setProfileImage(unavailable);
+      localStorage.removeItem("profileImage");
     }
   };
 
@@ -52,7 +54,7 @@ const UserProfile = () => {
           <div className="coverImageContainer">
             <Image className="coverImage" src={wallpaper} fluid />
             <div className="profileImageContainer">
-              <Image className="profileImage" src={profileImage} roundedCircle />
+              <Image className="profileImage" src={profileImage || unavailable} roundedCircle />
               <div className="profileImageOverlay">
                 <label htmlFor="profileImageUpload">
                   <MdAddAPhoto className="photoIcon" />
@@ -65,9 +67,9 @@ const UserProfile = () => {
                   style={{ display: "none" }}
                 />
                 {userProfile && userProfile.avatarUrl && (
-                  <Button className="deleteAvatarBtn" onClick={handleDeleteAvatar}>
+                  <button className="deleteAvatarBtn" onClick={handleDeleteAvatar}>
                     <BsTrash3Fill className="trashIcon" />
-                  </Button>
+                  </button>
                 )}
               </div>
             </div>
@@ -75,11 +77,7 @@ const UserProfile = () => {
           {userProfile && (
             <>
               <h1 className="userName">
-                Hi there,{" "}
-                <span className="plantBasedSpan">
-                  {userProfile.firstName} {userProfile.lastName}
-                </span>
-                ! 🥦 👋🏻
+                {userProfile.firstName} {userProfile.lastName}
               </h1>
               <Row className="justify-content-center mt-4">
                 <Col md={8}>
@@ -118,7 +116,9 @@ const UserProfile = () => {
                         <Form.Control type="email" defaultValue={userProfile.email} readOnly className="profileInput" />
                       </Col>
                     </Form.Group>
-                    <ResetFavouritesButtons />
+                    <div className="d-flex justify-content-between">
+                      <ResetFavouritesButtons />
+                    </div>
                   </Form>
                 </Col>
               </Row>

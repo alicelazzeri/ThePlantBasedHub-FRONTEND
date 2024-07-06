@@ -538,6 +538,7 @@ export const uploadAvatar = (id, avatar) => async dispatch => {
     }
 
     const avatarUrl = await response.text();
+    localStorage.setItem("profileImage", avatarUrl);
     dispatch(uploadAvatarSuccess(avatarUrl));
   } catch (error) {
     dispatch(uploadAvatarFailure(error.message));

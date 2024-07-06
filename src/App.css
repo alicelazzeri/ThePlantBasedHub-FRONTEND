@@ -708,11 +708,12 @@ input[type="range"]::-ms-track {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
+  border-radius: 10px;
   background-color: #d4dbaf;
   color: #fefefe;
   cursor: pointer;
   opacity: 0;
+  padding: 0.5rem;
   transition: opacity 0.3s ease;
 }
 
@@ -720,12 +721,17 @@ input[type="range"]::-ms-track {
 .trashIcon {
   font-size: 1.5rem;
   transition: all 0.5s ease;
+  background-color: transparent;
 }
 
 .photoIcon:hover,
 .trashIcon:hover {
   color: #00602f;
   cursor: pointer;
+}
+
+.trashIcon {
+  margin-right: -0.3rem;
 }
 
 .deleteAvatarBtn {
