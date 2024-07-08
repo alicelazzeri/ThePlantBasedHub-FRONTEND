@@ -912,6 +912,32 @@ input[type="range"]::-ms-track {
   font-size: 1.2rem;
 }
 
+.pdfIcon {
+  color: #fefefe;
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+  transition: color 0.5s ease;
+}
+
+.pdfBtn:hover .pdfIcon {
+  color: #00602f;
+}
+
+/* Modal Shopping List */
+
+.modalHeader {
+  background-color: #d4dbaf;
+}
+
+.modalTitle {
+  font-family: "Italiana", serif;
+  color: #00602f;
+}
+
+.ingredients {
+  font-family: "Raleway", sans-serif;
+}
+
 /* Mobile */
 
 @media (max-width: 425px) {

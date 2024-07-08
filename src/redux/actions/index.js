@@ -39,6 +39,9 @@ export const SEND_PDF_EMAIL_SUCCESS = "SEND_PDF_EMAIL_SUCCESS";
 export const SEND_PDF_EMAIL_FAILURE = "SEND_PDF_EMAIL_FAILURE";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
 
+export const GENERATE_SHOPPING_LIST_PDF_SUCCESS = "GENERATE_SHOPPING_LIST_PDF_SUCCESS";
+export const GENERATE_SHOPPING_LIST_PDF_FAILURE = "GENERATE_SHOPPING_LIST_PDF_FAILURE";
+
 // Action Creators
 
 // Loading spinner
@@ -95,6 +98,10 @@ export const generatePdfFailure = error => ({ type: GENERATE_PDF_FAILURE, payloa
 export const sendPdfEmailSuccess = () => ({ type: SEND_PDF_EMAIL_SUCCESS });
 export const sendPdfEmailFailure = error => ({ type: SEND_PDF_EMAIL_FAILURE, payload: error });
 export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
+
+// Generate PDF shopping list
+export const generateShoppingListPdfSuccess = () => ({ type: GENERATE_SHOPPING_LIST_PDF_SUCCESS });
+export const generateShoppingListPdfFailure = error => ({ type: GENERATE_SHOPPING_LIST_PDF_FAILURE, payload: error });
 
 // Helper function for parsing JSON
 const parseJSON = async response => {
@@ -596,6 +603,38 @@ export const sendPdfEmail = recipeId => async (dispatch, getState) => {
     dispatch(sendPdfEmailSuccess());
   } catch (error) {
     dispatch(sendPdfEmailFailure(error.message));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+// Generate PDF shopping list
+export const generateShoppingListPdf = items => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const response = await fetch(`${API}/shopping-list/pdf?items=${items.join(",")}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to generate shopping list PDF");
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `shopping_list.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    dispatch(generateShoppingListPdfSuccess());
+  } catch (error) {
+    dispatch(generateShoppingListPdfFailure(error.message));
   } finally {
     dispatch(stopLoading());
   }

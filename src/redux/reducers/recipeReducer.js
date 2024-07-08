@@ -20,6 +20,8 @@ import {
   SEND_PDF_EMAIL_SUCCESS,
   SEND_PDF_EMAIL_FAILURE,
   SET_USER_EMAIL,
+  GENERATE_SHOPPING_LIST_PDF_SUCCESS,
+  GENERATE_SHOPPING_LIST_PDF_FAILURE,
 } from "../actions";
 
 const initialState = {
@@ -30,6 +32,7 @@ const initialState = {
   pdfGenerated: false,
   emailSent: false,
   userEmail: localStorage.getItem("email") || null,
+  shoppingList: null,
 };
 
 const recipesReducer = (state = initialState, action) => {
@@ -66,6 +69,10 @@ const recipesReducer = (state = initialState, action) => {
       return { ...state, emailSent: false, error: action.payload, isLoading: false };
     case SET_USER_EMAIL:
       return { ...state, userEmail: action.payload };
+    case GENERATE_SHOPPING_LIST_PDF_SUCCESS:
+      return { ...state, shoppingList: action.payload, error: null, isLoading: false };
+    case GENERATE_SHOPPING_LIST_PDF_FAILURE:
+      return { ...state, error: action.payload, isLoading: false };
     default:
       return state;
   }
