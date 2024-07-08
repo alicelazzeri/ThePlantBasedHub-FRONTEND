@@ -15,6 +15,11 @@ import {
   GET_RECIPES_BY_SUGARS,
   GET_RECIPES_BY_VITAMINS,
   GET_RECIPES_BY_MINERALS,
+  GENERATE_PDF_SUCCESS,
+  GENERATE_PDF_FAILURE,
+  SEND_PDF_EMAIL_SUCCESS,
+  SEND_PDF_EMAIL_FAILURE,
+  SET_USER_EMAIL,
 } from "../actions";
 
 const initialState = {
@@ -22,6 +27,9 @@ const initialState = {
   recipes: [],
   recipe: null,
   error: null,
+  pdfGenerated: false,
+  emailSent: false,
+  userEmail: localStorage.getItem("email") || null,
 };
 
 const recipesReducer = (state = initialState, action) => {
@@ -48,6 +56,16 @@ const recipesReducer = (state = initialState, action) => {
     case GET_RECIPES_BY_VITAMINS:
     case GET_RECIPES_BY_MINERALS:
       return { ...state, recipes: action.payload, error: null, isLoading: false };
+    case GENERATE_PDF_SUCCESS:
+      return { ...state, pdfGenerated: true, error: null, isLoading: false };
+    case GENERATE_PDF_FAILURE:
+      return { ...state, pdfGenerated: false, error: action.payload, isLoading: false };
+    case SEND_PDF_EMAIL_SUCCESS:
+      return { ...state, emailSent: true, error: null, isLoading: false };
+    case SEND_PDF_EMAIL_FAILURE:
+      return { ...state, emailSent: false, error: action.payload, isLoading: false };
+    case SET_USER_EMAIL:
+      return { ...state, userEmail: action.payload };
     default:
       return state;
   }

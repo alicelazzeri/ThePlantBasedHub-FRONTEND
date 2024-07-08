@@ -252,7 +252,8 @@ p {
 .submitBtn,
 .modalBtn,
 .viewRecipeBtn,
-.filtersBtn {
+.filtersBtn,
+.pdfBtn {
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
   font-weight: bold;
@@ -263,7 +264,8 @@ p {
 .modalBtn,
 .registerLoginBtns,
 .viewRecipeBtn,
-.filtersBtn {
+.filtersBtn,
+.pdfBtn {
   border: none;
   background-color: #00602f;
   color: #fefefe;
@@ -278,7 +280,8 @@ p {
 .modalBtn:hover,
 .registerLoginBtns:hover,
 .viewRecipeBtn:hover,
-.filtersBtn:hover {
+.filtersBtn:hover,
+.pdfBtn:hover {
   cursor: pointer;
   background-color: #fefefe;
   color: #00602f;
@@ -908,6 +911,7 @@ input[type="range"]::-ms-track {
   font-weight: bold;
   font-size: 1.2rem;
 }
+
 /* Mobile */
 
 @media (max-width: 425px) {
