@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Image, Badge } from "react-bootstrap";
-import { fetchRecipeById, generatePdf, sendPdfEmail, generateShoppingListPdf } from "../redux/actions";
+import { Container, Row, Col, Image, Badge, Form } from "react-bootstrap";
+import {
+  fetchRecipeById,
+  generatePdf,
+  sendPdfEmail,
+  generateShoppingListPdf,
+  fetchCommentsByRecipeId,
+  addComment,
+} from "../redux/actions";
 import LoadingSpinner from "./LoadingSpinner";
 import { GiAlarmClock } from "react-icons/gi";
 import { IoIosRestaurant } from "react-icons/io";
@@ -15,13 +22,15 @@ import { PiListChecksBold } from "react-icons/pi";
 const SingleRecipePage = () => {
   const { recipeId } = useParams();
   const dispatch = useDispatch();
-  const { recipe, isLoading } = useSelector(state => state.recipes);
+  const { recipe, isLoading, comments } = useSelector(state => state.recipes);
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     if (recipeId) {
       dispatch(fetchRecipeById(recipeId));
+      dispatch(fetchCommentsByRecipeId(recipeId));
     }
   }, [dispatch, recipeId]);
 
@@ -50,6 +59,15 @@ const SingleRecipePage = () => {
   const handleGenerateShoppingList = () => {
     dispatch(generateShoppingListPdf(selectedIngredients));
     setShowModal(false);
+  };
+
+  const handleCommentChange = event => {
+    setNewComment(event.target.value);
+  };
+
+  const handleCommentSubmit = () => {
+    dispatch(addComment({ recipeId, text: newComment }));
+    setNewComment("");
   };
 
   return isLoading ? (
@@ -150,8 +168,34 @@ const SingleRecipePage = () => {
               </button>
             </div>
           </Row>
-          <Row>
-            <div>comments and ratings...</div>
+          <hr />
+          <Row className="commentsContainer mb-3">
+            <Col>
+              <h3 className="recipeTitle my-3">Comments</h3>
+              {comments && comments.length > 0 ? (
+                <ul className="commentsList">
+                  {comments.map(comment => (
+                    <li key={comment.id}>
+                      <strong>{comment.userId}</strong>: {comment.commentText}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No comments yet. Be the first to comment!</p>
+              )}
+              <Form.Group className="mb-3 commentForm" controlId="comment">
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={newComment}
+                  placeholder="Add a comment"
+                  onChange={handleCommentChange}
+                />
+              </Form.Group>
+              <button className="commentBtn mb-4" onClick={handleCommentSubmit}>
+                Submit Comment
+              </button>
+            </Col>
           </Row>
         </>
       ) : (

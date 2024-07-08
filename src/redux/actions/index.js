@@ -42,6 +42,11 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const GENERATE_SHOPPING_LIST_PDF_SUCCESS = "GENERATE_SHOPPING_LIST_PDF_SUCCESS";
 export const GENERATE_SHOPPING_LIST_PDF_FAILURE = "GENERATE_SHOPPING_LIST_PDF_FAILURE";
 
+export const GET_COMMENTS_BY_RECIPE_ID_SUCCESS = "GET_COMMENTS_BY_RECIPE_ID_SUCCESS";
+export const GET_COMMENTS_BY_RECIPE_ID_FAILURE = "GET_COMMENTS_BY_RECIPE_ID_FAILURE";
+export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
+export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+
 // Action Creators
 
 // Loading spinner
@@ -102,6 +107,15 @@ export const setUserEmail = email => ({ type: SET_USER_EMAIL, payload: email });
 // Generate PDF shopping list
 export const generateShoppingListPdfSuccess = () => ({ type: GENERATE_SHOPPING_LIST_PDF_SUCCESS });
 export const generateShoppingListPdfFailure = error => ({ type: GENERATE_SHOPPING_LIST_PDF_FAILURE, payload: error });
+
+// Comments and Ratings
+export const getCommentsByRecipeIdSuccess = comments => ({
+  type: GET_COMMENTS_BY_RECIPE_ID_SUCCESS,
+  payload: comments,
+});
+export const getCommentsByRecipeIdFailure = error => ({ type: GET_COMMENTS_BY_RECIPE_ID_FAILURE, payload: error });
+export const addCommentSuccess = comment => ({ type: ADD_COMMENT_SUCCESS, payload: comment });
+export const addCommentFailure = error => ({ type: ADD_COMMENT_FAILURE, payload: error });
 
 // Helper function for parsing JSON
 const parseJSON = async response => {
@@ -635,6 +649,45 @@ export const generateShoppingListPdf = items => async dispatch => {
     dispatch(generateShoppingListPdfSuccess());
   } catch (error) {
     dispatch(generateShoppingListPdfFailure(error.message));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+// Comments and Ratings
+export const fetchCommentsByRecipeId = recipeId => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const response = await fetch(`${API}/comments/recipe/${recipeId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await response.json();
+    dispatch(getCommentsByRecipeIdSuccess(data));
+  } catch (error) {
+    dispatch(getCommentsByRecipeIdFailure(error.message));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const addComment = commentData => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const response = await fetch(`${API}/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(commentData),
+    });
+    const data = await response.json();
+    dispatch(addCommentSuccess(data));
+  } catch (error) {
+    dispatch(addCommentFailure(error.message));
   } finally {
     dispatch(stopLoading());
   }

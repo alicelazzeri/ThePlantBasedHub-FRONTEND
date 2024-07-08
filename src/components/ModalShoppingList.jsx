@@ -3,7 +3,6 @@ import { Modal, Form, ListGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { generateShoppingListPdf } from "../redux/actions";
 import PropTypes from "prop-types";
-import { IoIosCloseCircle } from "react-icons/io";
 import { BsFilePdfFill } from "react-icons/bs";
 
 const ModalShoppingList = ({ show, handleClose, ingredients }) => {

@@ -22,6 +22,10 @@ import {
   SET_USER_EMAIL,
   GENERATE_SHOPPING_LIST_PDF_SUCCESS,
   GENERATE_SHOPPING_LIST_PDF_FAILURE,
+  GET_COMMENTS_BY_RECIPE_ID_SUCCESS,
+  GET_COMMENTS_BY_RECIPE_ID_FAILURE,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
 } from "../actions";
 
 const initialState = {
@@ -33,6 +37,7 @@ const initialState = {
   emailSent: false,
   userEmail: localStorage.getItem("email") || null,
   shoppingList: null,
+  comments: [],
 };
 
 const recipesReducer = (state = initialState, action) => {
@@ -72,6 +77,14 @@ const recipesReducer = (state = initialState, action) => {
     case GENERATE_SHOPPING_LIST_PDF_SUCCESS:
       return { ...state, shoppingList: action.payload, error: null, isLoading: false };
     case GENERATE_SHOPPING_LIST_PDF_FAILURE:
+      return { ...state, error: action.payload, isLoading: false };
+    case GET_COMMENTS_BY_RECIPE_ID_SUCCESS:
+      return { ...state, comments: action.payload, error: null, isLoading: false };
+    case GET_COMMENTS_BY_RECIPE_ID_FAILURE:
+      return { ...state, error: action.payload, isLoading: false };
+    case ADD_COMMENT_SUCCESS:
+      return { ...state, comments: [...state.comments, action.payload], error: null, isLoading: false };
+    case ADD_COMMENT_FAILURE:
       return { ...state, error: action.payload, isLoading: false };
     default:
       return state;
