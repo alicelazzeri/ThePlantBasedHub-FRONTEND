@@ -47,6 +47,9 @@ export const GET_COMMENTS_BY_RECIPE_ID_FAILURE = "GET_COMMENTS_BY_RECIPE_ID_FAIL
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_FAILURE = "GET_INGREDIENTS_FAILURE";
+
 // Action Creators
 
 // Loading spinner
@@ -116,6 +119,19 @@ export const getCommentsByRecipeIdSuccess = comments => ({
 export const getCommentsByRecipeIdFailure = error => ({ type: GET_COMMENTS_BY_RECIPE_ID_FAILURE, payload: error });
 export const addCommentSuccess = comment => ({ type: ADD_COMMENT_SUCCESS, payload: comment });
 export const addCommentFailure = error => ({ type: ADD_COMMENT_FAILURE, payload: error });
+
+// Ingredients
+export const getIngredientsSuccess = ingredients => ({
+  type: GET_INGREDIENTS_SUCCESS,
+  payload: ingredients,
+});
+
+export const getIngredientsFailure = error => ({
+  type: GET_INGREDIENTS_FAILURE,
+  payload: error,
+});
+
+// Thunks
 
 // Helper function for parsing JSON
 const parseJSON = async response => {
@@ -688,6 +704,30 @@ export const addComment = commentData => async dispatch => {
     dispatch(addCommentSuccess(data));
   } catch (error) {
     dispatch(addCommentFailure(error.message));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+// Ingredients
+export const fetchIngredients = () => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const response = await fetch(`${API}/ingredients?page=0&size=300`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch ingredients");
+    }
+    const data = await response.json();
+    console.log("Fetched ingredients:", data.content); // Debug log
+    dispatch(getIngredientsSuccess(data.content));
+  } catch (error) {
+    console.error("Error fetching ingredients:", error); // Debug log
+    dispatch(getIngredientsFailure(error.message));
   } finally {
     dispatch(stopLoading());
   }

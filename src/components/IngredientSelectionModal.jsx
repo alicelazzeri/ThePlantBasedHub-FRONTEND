@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { generateShoppingListPdf, getShoppingListHtml } from "../redux/actions";
+import PropTypes from "prop-types";
 
 const IngredientSelectionModal = ({ show, handleClose, ingredients }) => {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -60,6 +61,19 @@ const IngredientSelectionModal = ({ show, handleClose, ingredients }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+IngredientSelectionModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      ingredientName: PropTypes.string.isRequired,
+      quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      measurementUnit: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default IngredientSelectionModal;

@@ -1,88 +1,117 @@
+// IngredientsPageAuth.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Image, Row, Col, Form } from "react-bootstrap";
-import { startLoading, stopLoading } from "../redux/actions/index.js";
+import { Image, Row, Col, Form, Card, Badge } from "react-bootstrap";
+import { fetchIngredients } from "../redux/actions";
 import wallpaper from "../assets/images/ingredients.jpg";
-import LoadingSpinner from "./LoadingSpinner.jsx";
+import LoadingSpinner from "./LoadingSpinner";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import IngredientModal from "./IngredientModal";
 
 const IngredientsPageAuth = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.loading.isLoading);
-  const [filter, setFilter] = useState("");
-  const [ingredients] = useState([
-    { name: "Quinoa", description: "A complete protein source, rich in fiber and essential amino acids 🌱" },
-    { name: "Tomatoes", description: "High in vitamins C and K, and a great source of antioxidants 🍅" },
-    { name: "Kale", description: "Packed with vitamins A, C, and K, along with powerful antioxidants 🥬" },
-    { name: "Avocado", description: "Provides healthy fats, fiber, and a variety of vitamins and minerals 🥑" },
-    { name: "Corn", description: "High in fiber, vitamins B, and essential minerals 🌽" },
-    { name: "Carrots", description: "Excellent source of beta-carotene, fiber, and vitamin K1 🥕" },
-    { name: "Strawberries", description: "Loaded with vitamins C and manganese, and high in antioxidants 🍓" },
-    { name: "Sweet Potatoes", description: "Rich in vitamins A and C, and a good source of fiber 🍠" },
-  ]);
-  const [filteredIngredients, setFilteredIngredients] = useState(ingredients);
+  const { isLoading, ingredients, error } = useSelector(state => state.ingredients);
+  const [category, setCategory] = useState("");
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   useEffect(() => {
-    dispatch(startLoading());
-
-    setTimeout(() => {
-      dispatch(stopLoading());
-      AOS.init({
-        duration: 2000,
-        once: true,
-      });
-    }, 2000);
+    dispatch(fetchIngredients());
+    AOS.init({
+      duration: 2000,
+      once: true,
+    });
   }, [dispatch]);
 
-  useEffect(() => {
-    setFilteredIngredients(
-      ingredients.filter(ingredient => ingredient.name.toLowerCase().includes(filter.toLowerCase()))
-    );
-  }, [filter, ingredients]);
+  const handleCategoryChange = event => {
+    setCategory(event.target.value);
+  };
+
+  const handleShowModal = ingredient => {
+    setSelectedIngredient(ingredient);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedIngredient(null);
+  };
+
+  const filteredIngredients = category
+    ? ingredients.filter(ingredient => ingredient.ingredientCategory === category)
+    : ingredients;
+
+  const formatCategory = category => {
+    return category.replace(/_/g, " ").replace(/(\b[A-Z]+\b)/g, match => match.charAt(0) + match.slice(1));
+  };
 
   return (
-    <div
-      className="text-center"
-      data-aos="fade-zoom-in"
-      data-aos-easing="linear"
-      data-aos-duration="2000"
-      data-aos-offset="200"
-    >
+    <div className="text-center mb-5">
+      <div>
+        <Image className="pageWallpaper" src={wallpaper} fluid />
+      </div>
       {isLoading ? (
         <LoadingSpinner />
+      ) : error ? (
+        <div>Error: {error}</div>
       ) : (
         <>
-          <div>
-            <Image className="pageWallpaper" src={wallpaper} fluid />
-          </div>
           <div>
             <h2 className="recipeTitle mt-4 mb-3">OUR INGREDIENTS</h2>
             <h5 className="recipeSubtitle mb-4">
               <strong>Discover the Essentials of Plant-Based Cooking</strong>
             </h5>
-            <Form className="mb-5">
-              <Form.Group as={Col} md="6" className="mx-auto">
-                <Form.Control
-                  type="text"
-                  placeholder="Filter ingredients..."
-                  value={filter}
-                  onChange={e => setFilter(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-            <Row className="px-5">
-              {filteredIngredients.map((ingredient, index) => (
-                <Col key={index} md={4} className="mb-4">
-                  <div className="ingredientCard">
-                    <h5>{ingredient.name}</h5>
-                    <p>{ingredient.description}</p>
-                  </div>
-                </Col>
-              ))}
-            </Row>
+            <div className="mx-5">
+              <Form className="mb-3">
+                <Row className="justify-content-center">
+                  <Col xs={12} md={6} lg={4}>
+                    <Form.Group controlId="ingredientCategory">
+                      <Form.Control
+                        className="recipeFilter"
+                        as="select"
+                        value={category}
+                        onChange={handleCategoryChange}
+                      >
+                        <option value="">All Categories</option>
+                        <option value="VEGETABLES">Vegetables</option>
+                        <option value="FRUIT">Fruit</option>
+                        <option value="GRAINS">Grains</option>
+                        <option value="LEGUMES">Legumes</option>
+                        <option value="NUTS_SEEDS">Nuts and Seeds</option>
+                        <option value="GRAIN_PRODUCTS">Grain Products</option>
+                        <option value="MEAT_DAIRY_SUBSTITUTES">Meat and Dairy Substitutes</option>
+                        <option value="SWEETENERS">Sweeteners</option>
+                        <option value="OILS_CONDIMENTS">Oils and Condiments</option>
+                        <option value="SPICES">Spices</option>
+                        <option value="SUPERFOODS">Superfoods</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Form>
+              <hr />
+            </div>
           </div>
+          <Row className="justify-content-center px-5">
+            {filteredIngredients.map((ingredient, index) => (
+              <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                <Card className="ingredientCard d-flex flex-column h-100">
+                  <Card.Header>
+                    <Badge className="ingredientCategory">{formatCategory(ingredient.ingredientCategory)}</Badge>
+                  </Card.Header>
+                  <Card.Body className="d-flex flex-column flex-grow-1">
+                    <Card.Title className="ingredientTitle">{ingredient.ingredientName}</Card.Title>
+                    <Card.Text className="flex-grow-1">{ingredient.ingredientDescription}</Card.Text>
+                    <button className="ingredientBtn mt-auto" onClick={() => handleShowModal(ingredient)}>
+                      Check more
+                    </button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </>
+      )}
+      {selectedIngredient && (
+        <IngredientModal ingredient={selectedIngredient} show={!!selectedIngredient} handleClose={handleCloseModal} />
       )}
     </div>
   );

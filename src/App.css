@@ -254,7 +254,8 @@ p {
 .viewRecipeBtn,
 .filtersBtn,
 .pdfBtn,
-.commentBtn {
+.commentBtn,
+.ingredientBtn {
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
   font-weight: bold;
@@ -267,7 +268,8 @@ p {
 .viewRecipeBtn,
 .filtersBtn,
 .pdfBtn,
-.commentBtn {
+.commentBtn,
+.ingredientBtn {
   border: none;
   background-color: #00602f;
   color: #fefefe;
@@ -284,7 +286,8 @@ p {
 .viewRecipeBtn:hover,
 .filtersBtn:hover,
 .pdfBtn:hover,
-.commentBtn:hover {
+.commentBtn:hover,
+.ingredientBtn:hover {
   cursor: pointer;
   background-color: #fefefe;
   color: #00602f;
@@ -949,6 +952,64 @@ input[type="range"]::-ms-track {
 
 .ingredients {
   font-family: "Raleway", sans-serif;
+}
+
+/* Ingredients Page */
+
+.filterIngredients {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+}
+
+.ingredientCategory {
+  background-color: #d4dbaf !important;
+  font-size: 0.7rem;
+}
+
+.ingredientCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredientCard .card-body {
+  flex-grow: 1;
+}
+
+.ingredientCard .card-text.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-box-orient: vertical;
+}
+
+.ingredientCard .ingredientTitle {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ingredientCard .ingredientCategory {
+  background-color: #6c757d;
+  color: #fefefe;
+}
+
+/* Ingredient Modal */
+
+.ingredientName {
+  font-family: "Italiana", serif;
+  font-weight: bold;
+  color: #00602f;
+  font-size: 1.8rem;
+}
+
+.ingredientTable {
+  font-family: "Raleway", sans-serif;
+}
+
+.key {
+  color: #00602f !important;
 }
 
 /* Mobile */
