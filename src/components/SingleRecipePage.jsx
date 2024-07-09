@@ -14,6 +14,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import { GiAlarmClock } from "react-icons/gi";
 import { IoIosRestaurant } from "react-icons/io";
 import { MdAlternateEmail, MdOutlineLocalFireDepartment } from "react-icons/md";
+import { FaStar } from "react-icons/fa";
 import NotFound from "./NotFound";
 import ModalShoppingList from "./ModalShoppingList";
 import { BsFilePdfFill } from "react-icons/bs";
@@ -26,6 +27,7 @@ const SingleRecipePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     if (recipeId) {
@@ -66,8 +68,13 @@ const SingleRecipePage = () => {
   };
 
   const handleCommentSubmit = () => {
-    dispatch(addComment({ recipeId, text: newComment }));
+    dispatch(addComment({ recipeId, text: newComment, rating }));
     setNewComment("");
+    setRating(0);
+  };
+
+  const handleStarClick = value => {
+    setRating(value);
   };
 
   return isLoading ? (
@@ -127,6 +134,7 @@ const SingleRecipePage = () => {
                   </li>
                 ))}
               </ul>
+
               <p className="recipeSub">
                 <strong>Instructions</strong>
               </p>
@@ -189,6 +197,15 @@ const SingleRecipePage = () => {
                           <strong>
                             {comment.user.firstName} {comment.user.lastName}
                           </strong>
+                          <div className="rating">
+                            {[...Array(5)].map((star, index) => (
+                              <FaStar
+                                key={index}
+                                size={20}
+                                color={index < comment.recipeRating ? "#ffc107" : "#bcbec4"}
+                              />
+                            ))}
+                          </div>
                           <p>{comment.commentText}</p>
                         </div>
                       </div>
@@ -196,7 +213,7 @@ const SingleRecipePage = () => {
                   ))}
                 </ul>
               ) : (
-                <p>No comments yet. Be the first to comment!</p>
+                <p className="noComment">No comments yet. Be the first to comment!</p>
               )}
 
               <Form.Group className="mb-3 commentForm" controlId="comment">
@@ -208,6 +225,16 @@ const SingleRecipePage = () => {
                   onChange={handleCommentChange}
                 />
               </Form.Group>
+              <div className="rating addRating mb-3">
+                {[...Array(5)].map((star, index) => (
+                  <FaStar
+                    key={index}
+                    size={30}
+                    color={index < rating ? "#ffc107" : "#bcbec4"}
+                    onClick={() => handleStarClick(index + 1)}
+                  />
+                ))}
+              </div>
               <button className="commentBtn mb-4" onClick={handleCommentSubmit}>
                 Submit Comment
               </button>

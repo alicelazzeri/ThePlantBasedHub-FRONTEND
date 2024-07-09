@@ -980,8 +980,23 @@ input[type="range"]::-ms-track {
   border-radius: 10px;
 }
 
-.commentBtn {
+.commentBtn,
+.noComment,
+.addRating {
   margin-left: 20px;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating .fa-star {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.rating .fa-star:hover {
+  color: #ffc107;
 }
 
 /* Modal Shopping List */

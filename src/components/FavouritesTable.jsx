@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Image, Button } from "react-bootstrap";
 import unavailable from "../assets/images/unavailable-recipe.png";
-import { BsBookmarkStarFill, BsTrash3Fill } from "react-icons/bs";
+import { BsTrash3Fill } from "react-icons/bs";
 
 const FavouritesTable = () => {
   const recipes = [
@@ -52,9 +52,6 @@ const FavouritesTable = () => {
             <td>{recipe.category}</td>
             <td></td>
             <td>
-              <Button className="ratingBtn me-3">
-                <BsBookmarkStarFill />
-              </Button>
               <Button className="deleteBtn">
                 <BsTrash3Fill />
               </Button>
