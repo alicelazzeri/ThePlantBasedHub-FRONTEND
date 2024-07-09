@@ -120,14 +120,13 @@ const SingleRecipePage = () => {
               <p className="recipeSub">
                 <strong>Ingredients</strong>
               </p>
-              <ul className="ingredientList">
+              <ul className="ingredientList no-indent">
                 {recipe.ingredients.map(ingredient => (
                   <li key={ingredient.id}>
                     {ingredient.ingredientName} - {ingredient.quantity} {ingredient.measurementUnit}
                   </li>
                 ))}
               </ul>
-
               <p className="recipeSub">
                 <strong>Instructions</strong>
               </p>
@@ -171,20 +170,35 @@ const SingleRecipePage = () => {
             </div>
           </Row>
           <hr />
-          <Row className="commentsContainer mb-3">
+          <Row className="commentsContainer mb-3 py-3">
             <Col>
-              <h3 className="recipeTitle my-3">Comments</h3>
+              <h3 className="recipeTitle my-3 commentTitle">Comments</h3>
               {comments && comments.length > 0 ? (
                 <ul className="commentsList">
                   {comments.map(comment => (
-                    <li key={comment.id}>
-                      <strong>{comment.userId}</strong>: {comment.commentText}
+                    <li key={comment.id} className="commentList mb-2">
+                      <div className="commentItem">
+                        <img
+                          src={comment.user.avatarUrl}
+                          width="50"
+                          height="50"
+                          className="commentAvatar rounded-circle"
+                          alt="avatar"
+                        />
+                        <div className="commentContent">
+                          <strong>
+                            {comment.user.firstName} {comment.user.lastName}
+                          </strong>
+                          <p>{comment.commentText}</p>
+                        </div>
+                      </div>
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p>No comments yet. Be the first to comment!</p>
               )}
+
               <Form.Group className="mb-3 commentForm" controlId="comment">
                 <Form.Control
                   as="textarea"

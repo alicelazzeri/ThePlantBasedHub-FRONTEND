@@ -939,6 +939,51 @@ input[type="range"]::-ms-track {
   font-family: "Raleway", sans-serif;
 }
 
+.no-indent {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.no-indent li {
+  margin-bottom: 10px;
+}
+
+.commentItem {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.commentAvatar {
+  margin-right: 10px;
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.commentsList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.commentsContainer,
+.commentTitle,
+.commentForm,
+.commentBtn {
+  padding-left: 20px;
+}
+
+.commentsContainer {
+  border-radius: 10px;
+}
+
+.commentBtn {
+  margin-left: 20px;
+}
+
 /* Modal Shopping List */
 
 .modalHeader {
@@ -967,9 +1012,16 @@ input[type="range"]::-ms-track {
 }
 
 .ingredientCard {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  border: 1px solid #d4dbaf;
+  height: 100%;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.ingredientCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .ingredientCard .card-body {
