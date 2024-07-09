@@ -227,10 +227,10 @@ export const fetchRecipeById = id => async dispatch => {
       },
     });
     if (!response.ok) {
-      const errorData = await parseJSON(response);
+      const errorData = await response.json();
       throw new Error(errorData.message || "Failed to fetch recipe");
     }
-    const data = await parseJSON(response);
+    const data = await response.json();
     dispatch(getRecipeByIdSuccess(data));
   } catch (error) {
     dispatch(getAllRecipesFailure(error.message));
@@ -723,10 +723,8 @@ export const fetchIngredients = () => async dispatch => {
       throw new Error("Failed to fetch ingredients");
     }
     const data = await response.json();
-    console.log("Fetched ingredients:", data.content); // Debug log
     dispatch(getIngredientsSuccess(data.content));
   } catch (error) {
-    console.error("Error fetching ingredients:", error); // Debug log
     dispatch(getIngredientsFailure(error.message));
   } finally {
     dispatch(stopLoading());

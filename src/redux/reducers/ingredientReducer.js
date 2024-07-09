@@ -13,7 +13,6 @@ const ingredientReducer = (state = initialState, action) => {
     case STOP_LOADING:
       return { ...state, isLoading: false };
     case GET_INGREDIENTS_SUCCESS:
-      console.log("Reducer GET_INGREDIENTS_SUCCESS:", action.payload); // Debug log
       return { ...state, ingredients: action.payload, error: null, isLoading: false };
     case GET_INGREDIENTS_FAILURE:
       return { ...state, error: action.payload, isLoading: false };

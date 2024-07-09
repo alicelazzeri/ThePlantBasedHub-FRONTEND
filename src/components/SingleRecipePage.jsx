@@ -22,7 +22,7 @@ import { PiListChecksBold } from "react-icons/pi";
 const SingleRecipePage = () => {
   const { recipeId } = useParams();
   const dispatch = useDispatch();
-  const { recipe, isLoading, comments } = useSelector(state => state.recipes);
+  const { recipe, isLoading, error, comments } = useSelector(state => state.recipes);
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -74,7 +74,9 @@ const SingleRecipePage = () => {
     <LoadingSpinner />
   ) : (
     <Container>
-      {recipe ? (
+      {error ? (
+        <div>Error: {error}</div>
+      ) : recipe ? (
         <>
           <Row className="mt-5 mb-3 d-flex align-items-center">
             <Col md={6}>
