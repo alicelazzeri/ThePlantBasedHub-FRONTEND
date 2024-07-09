@@ -816,13 +816,13 @@ input[type="range"]::-ms-track {
 }
 
 .favTable th {
-  background-color: #1b643e !important;
-  color: #fefefe;
+  background-color: #d4dbaf !important;
+  color: #00602f;
   font-family: "Italiana", serif;
   height: 70px;
   vertical-align: middle;
-  font-size: 1.1rem;
-  text-transform: uppercase;
+  font-size: 1.3rem;
+
   border: none;
 }
 
