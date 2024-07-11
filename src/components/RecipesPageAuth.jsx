@@ -15,15 +15,19 @@ import {
   fetchRecipesByTotalSugars,
   fetchRecipesByTotalVitamins,
   fetchRecipesByTotalMinerals,
+  addToFavorites,
+  removeFromFavorites,
 } from "../redux/actions/index.js";
 import LoadingSpinner from "./LoadingSpinner";
 import { CiBookmarkPlus } from "react-icons/ci";
-import { BsSearch } from "react-icons/bs";
+import { BsSearch, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const RecipesPageAuth = () => {
   const dispatch = useDispatch();
   const { recipes, isLoading, error } = useSelector(state => state.recipes);
+  const { favoriteRecipes = [] } = useSelector(state => state.favourites);
+
   const [filter, setFilter] = useState("");
   const [expandedRecipes, setExpandedRecipes] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -140,6 +144,14 @@ const RecipesPageAuth = () => {
     dispatch(fetchRecipesByTotalVitamins(vitaminBadges.join(",")));
     dispatch(fetchRecipesByTotalMinerals(mineralBadges.join(",")));
     setShowOffcanvas(false);
+  };
+
+  const handleFavoriteToggle = recipeId => {
+    if (favoriteRecipes.includes(recipeId)) {
+      dispatch(removeFromFavorites(recipeId));
+    } else {
+      dispatch(addToFavorites(recipeId));
+    }
   };
 
   const filteredRecipes = recipes.filter(recipe => recipe.recipeCategory.toLowerCase().includes(filter.toLowerCase()));
@@ -503,6 +515,13 @@ const RecipesPageAuth = () => {
                     <Card.Img className="recipeCardImg" variant="top" src={recipe.imageUrl} width={400} height={400} />
                     <Card.Body>
                       <Card.Title>{recipe.recipeName}</Card.Title>
+                      <div className="favorite-icon" onClick={() => handleFavoriteToggle(recipe.id)}>
+                        {favoriteRecipes.includes(recipe.id) ? (
+                          <BsHeartFill color="red" size={20} />
+                        ) : (
+                          <BsHeart color="grey" size={20} />
+                        )}
+                      </div>
                       <Card.Text
                         className={`carouselBody ${expandedRecipes[recipe.id] ? "" : "text-truncate"}`}
                         style={{ maxHeight: expandedRecipes[recipe.id] ? "none" : "3em" }}

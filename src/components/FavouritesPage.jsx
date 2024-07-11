@@ -1,18 +1,30 @@
+import React from "react";
 import { Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import FavouritesTable from "./FavouritesTable";
+import { useNavigate } from "react-router-dom";
 
 const FavouritesPage = () => {
+  const favoriteRecipes = useSelector(state => state.favoriteRecipes || []);
+  const navigate = useNavigate();
+
   return (
     <Container className="text-center">
       <div>
         <h2 className="recipeTitle mt-4 mb-3">MY FAVOURITE RECIPES</h2>
-        <p className="px-5 mt-4 recipeBody">
-          Welcome to your Favorites section! Here you will find all the recipes you have saved and want to keep handy.
-          Whether you are looking for ideas for breakfast, lunch, dinner, or a snack, this page allows you to easily
-          access your favorite dishes and rediscover the recipes you love the most.
-        </p>
+        {favoriteRecipes.length === 0 ? (
+          <>
+            <p className="px-5 mt-4 recipeBody">
+              You have no favorite recipes yet. Start adding some of your favorite dishes to easily access them here!
+            </p>
+            <button className="searchRecipesBtn mt-3 mb-5" onClick={() => navigate("/recipes")}>
+              Search recipes
+            </button>
+          </>
+        ) : (
+          <FavouritesTable />
+        )}
       </div>
-      <FavouritesTable />
     </Container>
   );
 };

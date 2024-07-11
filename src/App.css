@@ -255,7 +255,8 @@ p {
 .filtersBtn,
 .pdfBtn,
 .commentBtn,
-.ingredientBtn {
+.ingredientBtn,
+.searchRecipesBtn {
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
   font-weight: bold;
@@ -269,7 +270,8 @@ p {
 .filtersBtn,
 .pdfBtn,
 .commentBtn,
-.ingredientBtn {
+.ingredientBtn,
+.searchRecipesBtn {
   border: none;
   background-color: #00602f;
   color: #fefefe;
@@ -287,7 +289,8 @@ p {
 .filtersBtn:hover,
 .pdfBtn:hover,
 .commentBtn:hover,
-.ingredientBtn:hover {
+.ingredientBtn:hover,
+.searchRecipesBtn:hover {
   cursor: pointer;
   background-color: #fefefe;
   color: #00602f;
@@ -847,34 +850,38 @@ input[type="range"]::-ms-track {
   vertical-align: middle;
 }
 
-.ratingBtn,
 .deleteBtn {
   border: none;
   background-color: transparent;
   font-size: 1.5rem;
+  color: #600000;
   transition: transform 0.3s ease;
 }
 
-.ratingBtn {
-  color: #00602f;
-}
-
-.deleteBtn {
-  color: #600000;
-}
-
-.ratingBtn:hover,
 .deleteBtn:hover {
   transform: scale(1.3);
   background-color: transparent !important;
-}
-
-.ratingBtn:hover {
-  color: #00602f;
-}
-
-.deleteBtn:hover {
   color: #600000;
+}
+
+.text-secondary {
+  color: #bcbec4;
+}
+
+.text-danger {
+  color: rgb(163, 0, 0);
+}
+
+.recipesLink {
+  text-decoration: none;
+  color: #fefefe;
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
 
 /* Single Recipe Page */

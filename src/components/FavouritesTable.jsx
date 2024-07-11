@@ -1,29 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, Image, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavoriteRecipesByUserId, removeFromFavorites } from "../redux/actions";
 import unavailable from "../assets/images/unavailable-recipe.png";
 import { BsTrash3Fill } from "react-icons/bs";
 
 const FavouritesTable = () => {
-  const recipes = [
-    {
-      id: 1,
-      image: "",
-      name: "Vegan Pancakes",
-      category: "Breakfast",
-    },
-    {
-      id: 2,
-      image: "",
-      name: "Quinoa Salad",
-      category: "Lunch",
-    },
-    {
-      id: 3,
-      image: "",
-      name: "Tofu Stir Fry",
-      category: "Dinner",
-    },
-  ];
+  const dispatch = useDispatch();
+  const userId = useSelector(state => state.auth.userId);
+  const favoriteRecipes = useSelector(state => state.favoriteRecipes);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteRecipesByUserId(userId));
+  }, [dispatch, userId]);
+
+  const handleRemoveFavorite = recipeId => {
+    dispatch(removeFromFavorites(recipeId));
+  };
 
   return (
     <Table hover className="favTable" responsive="sm">
@@ -32,32 +25,38 @@ const FavouritesTable = () => {
           <th></th>
           <th>Recipe Name</th>
           <th>Recipe Category</th>
-          <th>Rating</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {recipes.map(recipe => (
-          <tr key={recipe.id} className="tableRow">
-            <td>
-              <Image
-                src={recipe.image || unavailable}
-                alt={recipe.name}
-                className="rounded-circle recipeImg"
-                width={100}
-                height={100}
-              />
-            </td>
-            <td>{recipe.name}</td>
-            <td>{recipe.category}</td>
-            <td></td>
-            <td>
-              <Button className="deleteBtn">
-                <BsTrash3Fill />
-              </Button>
+        {favoriteRecipes.length > 0 ? (
+          favoriteRecipes.map(recipe => (
+            <tr key={recipe.id} className="tableRow">
+              <td>
+                <Image
+                  src={recipe.image || unavailable}
+                  alt={recipe.name}
+                  className="rounded-circle recipeImg"
+                  width={100}
+                  height={100}
+                />
+              </td>
+              <td>{recipe.recipeName}</td>
+              <td>{recipe.recipeCategory}</td>
+              <td>
+                <Button className="deleteBtn" onClick={() => handleRemoveFavorite(recipe.id)}>
+                  <BsTrash3Fill />
+                </Button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="5" className="text-center">
+              No favorite recipes found. Add some!
             </td>
           </tr>
-        ))}
+        )}
       </tbody>
     </Table>
   );

@@ -50,6 +50,13 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILURE = "GET_INGREDIENTS_FAILURE";
 
+export const ADD_TO_FAVORITES_SUCCESS = "ADD_TO_FAVORITES_SUCCESS";
+export const ADD_TO_FAVORITES_FAILURE = "ADD_TO_FAVORITES_FAILURE";
+export const REMOVE_FROM_FAVORITES_SUCCESS = "REMOVE_FROM_FAVORITES_SUCCESS";
+export const REMOVE_FROM_FAVORITES_FAILURE = "REMOVE_FROM_FAVORITES_FAILURE";
+export const GET_FAVORITE_RECIPES_SUCCESS = "GET_FAVORITE_RECIPES_SUCCESS";
+export const GET_FAVORITE_RECIPES_FAILURE = "GET_FAVORITE_RECIPES_FAILURE";
+
 // Action Creators
 
 // Loading spinner
@@ -130,6 +137,16 @@ export const getIngredientsFailure = error => ({
   type: GET_INGREDIENTS_FAILURE,
   payload: error,
 });
+
+// Favourites
+export const getFavoriteRecipesSuccess = recipes => ({ type: GET_FAVORITE_RECIPES_SUCCESS, payload: recipes });
+export const getFavoriteRecipesFailure = error => ({ type: GET_FAVORITE_RECIPES_FAILURE, payload: error });
+
+export const addToFavoritesSuccess = recipeId => ({ type: ADD_TO_FAVORITES_SUCCESS, payload: recipeId });
+export const addToFavoritesFailure = error => ({ type: ADD_TO_FAVORITES_FAILURE, payload: error });
+
+export const removeFromFavoritesSuccess = recipeId => ({ type: REMOVE_FROM_FAVORITES_SUCCESS, payload: recipeId });
+export const removeFromFavoritesFailure = error => ({ type: REMOVE_FROM_FAVORITES_FAILURE, payload: error });
 
 // Thunks
 
@@ -728,5 +745,77 @@ export const fetchIngredients = () => async dispatch => {
     dispatch(getIngredientsFailure(error.message));
   } finally {
     dispatch(stopLoading());
+  }
+};
+
+// Favourites
+export const fetchFavoriteRecipesByUserId = userId => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const response = await fetch(`${API}/favorite-recipes/user/${userId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (!response.ok) {
+      const errorData = await parseJSON(response);
+      throw new Error(errorData.message || "Failed to fetch favorite recipes");
+    }
+    const data = await parseJSON(response);
+    dispatch(getFavoriteRecipesSuccess(data));
+  } catch (error) {
+    dispatch(getFavoriteRecipesFailure(error.message));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const addToFavorites = recipeId => async (dispatch, getState) => {
+  const state = getState();
+  const token = state.auth.token;
+  const userId = state.auth.userId;
+
+  try {
+    const response = await fetch(`${API}/favorite-recipes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ recipeId, userId }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add to favorites");
+    }
+
+    const data = await response.json();
+    dispatch(addToFavoritesSuccess(data));
+  } catch (error) {
+    dispatch(addToFavoritesFailure(error.message));
+  }
+};
+
+export const removeFromFavorites = recipeId => async (dispatch, getState) => {
+  const state = getState();
+  const token = state.auth.token;
+  const userId = state.auth.userId;
+
+  try {
+    const response = await fetch(`${API}/favorite-recipes/user/${userId}/recipe/${recipeId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to remove from favorites");
+    }
+
+    dispatch(removeFromFavoritesSuccess(recipeId));
+  } catch (error) {
+    dispatch(removeFromFavoritesFailure(error.message));
   }
 };

@@ -9,12 +9,15 @@ import {
   generateShoppingListPdf,
   fetchCommentsByRecipeId,
   addComment,
+  addToFavorites,
+  removeFromFavorites,
 } from "../redux/actions";
 import LoadingSpinner from "./LoadingSpinner";
 import { GiAlarmClock } from "react-icons/gi";
 import { IoIosRestaurant } from "react-icons/io";
 import { MdAlternateEmail, MdOutlineLocalFireDepartment } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
+import { BsHeart, BsHeartFill } from "react-icons/bs"; // Import delle icone del cuore
 import NotFound from "./NotFound";
 import ModalShoppingList from "./ModalShoppingList";
 import { BsFilePdfFill } from "react-icons/bs";
@@ -24,6 +27,7 @@ const SingleRecipePage = () => {
   const { recipeId } = useParams();
   const dispatch = useDispatch();
   const { recipe, isLoading, error, comments } = useSelector(state => state.recipes);
+  const { favoriteRecipes = [] } = useSelector(state => state.favourites);
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -77,6 +81,14 @@ const SingleRecipePage = () => {
     setRating(value);
   };
 
+  const handleFavoriteToggle = () => {
+    if (favoriteRecipes.includes(recipeId)) {
+      dispatch(removeFromFavorites(recipeId));
+    } else {
+      dispatch(addToFavorites(recipeId));
+    }
+  };
+
   return isLoading ? (
     <LoadingSpinner />
   ) : (
@@ -91,6 +103,13 @@ const SingleRecipePage = () => {
             </Col>
             <Col md={6}>
               <h2 className="recipeTitle">{recipe.recipeName}</h2>
+              <div className="favorite-icon" onClick={handleFavoriteToggle}>
+                {favoriteRecipes.includes(recipeId) ? (
+                  <BsHeartFill color="red" size={20} />
+                ) : (
+                  <BsHeart color="grey" size={20} />
+                )}
+              </div>
               <p className="recipeDescription">{recipe.recipeDescription}</p>
               <p>
                 <Badge className="recipeCategory">{recipe.recipeCategory.replace(/_/g, " ")}</Badge>
