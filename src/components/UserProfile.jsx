@@ -11,15 +11,15 @@ import { BsTrash3Fill } from "react-icons/bs";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+  const userId = useSelector(state => state.auth.user.id);
   const { userProfile, isLoading } = useSelector(state => state.userProfile);
   const [profileImage, setProfileImage] = useState(unavailable);
 
   useEffect(() => {
-    const userId = localStorage.getItem("id");
     if (userId) {
       dispatch(fetchUserProfile(userId));
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     if (userProfile && userProfile.avatarUrl) {
@@ -34,14 +34,14 @@ const UserProfile = () => {
   const handleProfileImageChange = event => {
     const file = event.target.files[0];
     if (file) {
-      dispatch(uploadAvatar(userProfile.id, file));
+      dispatch(uploadAvatar(userId, file));
     }
   };
 
   const handleDeleteAvatar = () => {
     if (userProfile.avatarUrl) {
       const publicId = userProfile.avatarUrl.split("/").pop();
-      dispatch(deleteAvatar(userProfile.id, publicId));
+      dispatch(deleteAvatar(userId, publicId));
       setProfileImage(unavailable);
       localStorage.removeItem("profileImage");
     }

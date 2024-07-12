@@ -1,11 +1,13 @@
+// src/components/FavouritesPage.jsx
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import FavouritesTable from "./FavouritesTable";
 import { useNavigate } from "react-router-dom";
+import { selectFavouriteRecipes } from "../redux/selectors";
 
 const FavouritesPage = () => {
-  const favoriteRecipes = useSelector(state => state.favoriteRecipes || []);
+  const favoriteRecipes = useSelector(selectFavouriteRecipes);
   const navigate = useNavigate();
 
   return (

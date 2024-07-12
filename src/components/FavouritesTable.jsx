@@ -1,14 +1,16 @@
+// src/components/FavouritesTable.jsx
 import React, { useEffect } from "react";
 import { Table, Image, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoriteRecipesByUserId, removeFromFavorites } from "../redux/actions";
 import unavailable from "../assets/images/unavailable-recipe.png";
 import { BsTrash3Fill } from "react-icons/bs";
+import { selectFavouriteRecipes } from "../redux/selectors";
 
 const FavouritesTable = () => {
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.userId);
-  const favoriteRecipes = useSelector(state => state.favoriteRecipes);
+  const userId = useSelector(state => state.auth.user.id);
+  const favoriteRecipes = useSelector(selectFavouriteRecipes);
 
   useEffect(() => {
     dispatch(fetchFavoriteRecipesByUserId(userId));

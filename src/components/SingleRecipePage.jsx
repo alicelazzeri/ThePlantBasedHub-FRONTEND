@@ -14,10 +14,9 @@ import {
 } from "../redux/actions";
 import LoadingSpinner from "./LoadingSpinner";
 import { GiAlarmClock } from "react-icons/gi";
-import { IoIosRestaurant } from "react-icons/io";
+import { IoIosHeart, IoIosHeartEmpty, IoIosRestaurant } from "react-icons/io";
 import { MdAlternateEmail, MdOutlineLocalFireDepartment } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import { BsHeart, BsHeartFill } from "react-icons/bs"; // Import delle icone del cuore
 import NotFound from "./NotFound";
 import ModalShoppingList from "./ModalShoppingList";
 import { BsFilePdfFill } from "react-icons/bs";
@@ -32,6 +31,7 @@ const SingleRecipePage = () => {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [rating, setRating] = useState(0);
+  const userId = useSelector(state => state.auth.user.id);
 
   useEffect(() => {
     if (recipeId) {
@@ -83,9 +83,9 @@ const SingleRecipePage = () => {
 
   const handleFavoriteToggle = () => {
     if (favoriteRecipes.includes(recipeId)) {
-      dispatch(removeFromFavorites(recipeId));
+      dispatch(removeFromFavorites(recipeId, userId));
     } else {
-      dispatch(addToFavorites(recipeId));
+      dispatch(addToFavorites(recipeId, userId));
     }
   };
 
@@ -98,17 +98,19 @@ const SingleRecipePage = () => {
       ) : recipe ? (
         <>
           <Row className="mt-5 mb-3 d-flex align-items-center">
-            <Col md={6}>
+            <Col md={6} className="position-relative">
               <Image className="recipePic" src={recipe.imageUrl} fluid />
             </Col>
             <Col md={6}>
-              <h2 className="recipeTitle">{recipe.recipeName}</h2>
-              <div className="favorite-icon" onClick={handleFavoriteToggle}>
-                {favoriteRecipes.includes(recipeId) ? (
-                  <BsHeartFill color="red" size={20} />
-                ) : (
-                  <BsHeart color="grey" size={20} />
-                )}
+              <div className="d-flex align-items-center justify-content-start">
+                <h2 className="recipeTitle">{recipe.recipeName}</h2>
+                <div className="favorite-icon position-absolute top-0 end-0 p-2" onClick={handleFavoriteToggle}>
+                  {favoriteRecipes.includes(recipeId) ? (
+                    <IoIosHeart color="red" size={40} />
+                  ) : (
+                    <IoIosHeartEmpty color="grey" size={40} />
+                  )}
+                </div>
               </div>
               <p className="recipeDescription">{recipe.recipeDescription}</p>
               <p>

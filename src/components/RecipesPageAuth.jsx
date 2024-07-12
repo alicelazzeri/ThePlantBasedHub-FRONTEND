@@ -20,13 +20,15 @@ import {
 } from "../redux/actions/index.js";
 import LoadingSpinner from "./LoadingSpinner";
 import { CiBookmarkPlus } from "react-icons/ci";
-import { BsSearch, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 const RecipesPageAuth = () => {
   const dispatch = useDispatch();
   const { recipes, isLoading, error } = useSelector(state => state.recipes);
   const { favoriteRecipes = [] } = useSelector(state => state.favourites);
+  const userId = useSelector(state => state.auth.user?.id); // Ensure userId is retrieved correctly
 
   const [filter, setFilter] = useState("");
   const [expandedRecipes, setExpandedRecipes] = useState({});
@@ -147,10 +149,15 @@ const RecipesPageAuth = () => {
   };
 
   const handleFavoriteToggle = recipeId => {
+    if (!userId) {
+      console.error("User ID is undefined");
+      return;
+    }
+
     if (favoriteRecipes.includes(recipeId)) {
-      dispatch(removeFromFavorites(recipeId));
+      dispatch(removeFromFavorites(recipeId, userId));
     } else {
-      dispatch(addToFavorites(recipeId));
+      dispatch(addToFavorites(recipeId, userId));
     }
   };
 
@@ -513,15 +520,18 @@ const RecipesPageAuth = () => {
                 <Col xs={12} md={6} lg={4} key={recipe.id} className="mb-4">
                   <Card className="h-100 recipeCard">
                     <Card.Img className="recipeCardImg" variant="top" src={recipe.imageUrl} width={400} height={400} />
+                    <div
+                      className="favorite-icon-overlay position-absolute top-0 end-0 p-2"
+                      onClick={() => handleFavoriteToggle(recipe.id)}
+                    >
+                      {favoriteRecipes.includes(recipe.id) ? (
+                        <FcLike color="red" size={40} />
+                      ) : (
+                        <FcLikePlaceholder color="grey" size={40} />
+                      )}
+                    </div>
                     <Card.Body>
                       <Card.Title>{recipe.recipeName}</Card.Title>
-                      <div className="favorite-icon" onClick={() => handleFavoriteToggle(recipe.id)}>
-                        {favoriteRecipes.includes(recipe.id) ? (
-                          <BsHeartFill color="red" size={20} />
-                        ) : (
-                          <BsHeart color="grey" size={20} />
-                        )}
-                      </div>
                       <Card.Text
                         className={`carouselBody ${expandedRecipes[recipe.id] ? "" : "text-truncate"}`}
                         style={{ maxHeight: expandedRecipes[recipe.id] ? "none" : "3em" }}
