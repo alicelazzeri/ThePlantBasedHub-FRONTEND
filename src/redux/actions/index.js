@@ -183,7 +183,6 @@ export const registerUser = (userData, isAdmin) => async dispatch => {
 
 // Login
 export const loginUser = loginData => async dispatch => {
-  dispatch(startLoading());
   try {
     const response = await fetch(`${API_AUTH}/login`, {
       method: "POST",
@@ -195,15 +194,13 @@ export const loginUser = loginData => async dispatch => {
       throw new Error(errorData.message || "Login failed");
     }
     const data = await response.json();
-    localStorage.setItem("id", data.userId);
+    console.log("Login Response Data:", data);
+    localStorage.setItem("id", data.id);
     localStorage.setItem("token", data.accessToken);
     localStorage.setItem("email", data.email);
     dispatch(loginSuccess(data));
-    dispatch(setUserEmail(data.email));
   } catch (error) {
     dispatch(loginFailure(error.message));
-  } finally {
-    dispatch(stopLoading());
   }
 };
 
@@ -519,7 +516,6 @@ export const fetchRecipesByTotalMinerals = minerals => async dispatch => {
 export const fetchUserProfile = id => async dispatch => {
   dispatch(startLoading());
   const token = localStorage.getItem("token");
-  console.log("Fetching user profile with token:", token);
 
   try {
     const response = await fetch(`${API}/users/${id}`, {
@@ -533,7 +529,7 @@ export const fetchUserProfile = id => async dispatch => {
       throw new Error("Failed to fetch user profile");
     }
 
-    const data = await parseJSON(response);
+    const data = await response.json();
     dispatch(getUserProfileSuccess(data));
   } catch (error) {
     dispatch(getUserProfileFailure(error.message));

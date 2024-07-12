@@ -4,10 +4,14 @@ import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const navigate = useNavigate();
+  const userId = useSelector(state => state.auth.user?.id);
+
+  console.log("User ID from Redux:", userId);
 
   const handleAccountClick = e => {
     e.stopPropagation();
@@ -101,7 +105,7 @@ const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
                         Hi, {userName}
                       </Dropdown.Item>
                       <Dropdown.Item as="div">
-                        <Link className="navLink" to="/profile">
+                        <Link className="navLink" to={`/profile/${userId}`}>
                           Your profile
                         </Link>
                       </Dropdown.Item>

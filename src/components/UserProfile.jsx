@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Container, Row, Col, Image, Form } from "react-bootstrap";
 import wallpaper from "../assets/images/pattern.jpg";
 import unavailable from "../assets/images/unavailable.png";
@@ -11,7 +12,10 @@ import { BsTrash3Fill } from "react-icons/bs";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.auth.user.id);
+  const { userId } = useParams();
+
+  console.log("User ID from URL:", userId);
+
   const { userProfile, isLoading } = useSelector(state => state.userProfile);
   const [profileImage, setProfileImage] = useState(unavailable);
 
@@ -101,7 +105,7 @@ const UserProfile = () => {
                         />
                       </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} class="mb-3">
                       <Form.Label column sm={3} className="profileLabel">
                         Last Name
                       </Form.Label>
