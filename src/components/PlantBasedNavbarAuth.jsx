@@ -2,12 +2,12 @@ import { Container, Navbar, Nav, Offcanvas, Dropdown } from "react-bootstrap";
 import logo from "../assets/images/logo.png";
 import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate qui
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
-  const navigate = useNavigate(); // Importa useNavigate qui
+  const navigate = useNavigate();
 
   const handleAccountClick = e => {
     e.stopPropagation();
@@ -15,7 +15,7 @@ const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
 
   const handleLogoutClick = () => {
     onLogout();
-    navigate("/"); // Redirect to homepage after logout
+    navigate("/");
   };
 
   return (
@@ -97,20 +97,20 @@ const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
                       <BsPersonCircle className="icon-hover accountIcon" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdownMenu">
-                      <Dropdown.Item as={Link} to="/profile" disabled className="dropdownItem userNameItem">
+                      <Dropdown.Item as="div" disabled className="dropdownItem userNameItem">
                         Hi, {userName}
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem">
+                      <Dropdown.Item as="div">
                         <Link className="navLink" to="/profile">
                           Your profile
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem">
+                      <Dropdown.Item as="div">
                         <Link className="navLink" to="/favourites">
                           Favourites
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownItem navLink" onClick={handleLogoutClick}>
+                      <Dropdown.Item as="div" className="dropdownItem navLink" onClick={handleLogoutClick}>
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
