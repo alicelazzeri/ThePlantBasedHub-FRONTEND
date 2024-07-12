@@ -118,7 +118,7 @@ const UserProfile = () => {
                         />
                       </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} className="mb-3 mt-3">
                       <Form.Label column sm={3} className="profileLabel">
                         Email
                       </Form.Label>

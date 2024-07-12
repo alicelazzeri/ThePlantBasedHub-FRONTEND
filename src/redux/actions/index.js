@@ -194,7 +194,6 @@ export const loginUser = loginData => async dispatch => {
       throw new Error(errorData.message || "Login failed");
     }
     const data = await response.json();
-    console.log("Login Response Data:", data);
     localStorage.setItem("id", data.id);
     localStorage.setItem("token", data.accessToken);
     localStorage.setItem("email", data.email);
