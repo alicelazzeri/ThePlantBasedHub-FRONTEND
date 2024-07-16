@@ -6,6 +6,7 @@ import unavailable from "../assets/images/unavailable-recipe.png";
 import { BsTrash3Fill } from "react-icons/bs";
 import { selectFavouriteRecipes } from "../redux/selectors";
 import { Link } from "react-router-dom";
+import { FcDislike } from "react-icons/fc";
 
 const FavouritesTable = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const FavouritesTable = () => {
                 </td>
                 <td>
                   <Button className="deleteBtn" onClick={() => handleRemoveFavorite(recipe.id)}>
-                    <BsTrash3Fill />
+                    <FcDislike />
                   </Button>
                 </td>
               </tr>
