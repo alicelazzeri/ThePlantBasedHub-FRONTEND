@@ -886,6 +886,25 @@ input[type="range"]::-ms-track {
   right: 10px;
 }
 
+.recipeImg {
+  transition: all 0.5s ease;
+}
+
+.recipeImg:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip {
+  background-color: #d4dbaf !important;
+  font-family: "Raleway", sans-serif !important;
+  font-weight: bold;
+}
+
+.recipeName {
+  color: #00602f !important;
+}
+
 /* Single Recipe Page */
 
 .recipePic {
@@ -1186,6 +1205,10 @@ input[type="range"]::-ms-track {
   .recipePic {
     width: 400px;
     height: 200px;
+  }
+
+  .categoryBadge {
+    font-size: 0.7rem !important;
   }
 }
 

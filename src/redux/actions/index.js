@@ -139,14 +139,14 @@ export const getIngredientsFailure = error => ({
 });
 
 // Favourites
-export const getFavoriteRecipesSuccess = recipes => ({ type: GET_FAVORITE_RECIPES_SUCCESS, payload: recipes });
-export const getFavoriteRecipesFailure = error => ({ type: GET_FAVORITE_RECIPES_FAILURE, payload: error });
-
-export const addToFavoritesSuccess = recipeId => ({ type: ADD_TO_FAVORITES_SUCCESS, payload: recipeId });
+export const addToFavoritesSuccess = recipe => ({ type: ADD_TO_FAVORITES_SUCCESS, payload: recipe });
 export const addToFavoritesFailure = error => ({ type: ADD_TO_FAVORITES_FAILURE, payload: error });
 
 export const removeFromFavoritesSuccess = recipeId => ({ type: REMOVE_FROM_FAVORITES_SUCCESS, payload: recipeId });
 export const removeFromFavoritesFailure = error => ({ type: REMOVE_FROM_FAVORITES_FAILURE, payload: error });
+
+export const getFavoriteRecipesSuccess = recipes => ({ type: GET_FAVORITE_RECIPES_SUCCESS, payload: recipes });
+export const getFavoriteRecipesFailure = error => ({ type: GET_FAVORITE_RECIPES_FAILURE, payload: error });
 
 // Thunks
 
@@ -766,10 +766,8 @@ export const fetchFavoriteRecipesByUserId = userId => async dispatch => {
   }
 };
 
-export const addToFavorites = recipeId => async (dispatch, getState) => {
-  const state = getState();
-  const token = state.auth.token;
-  const userId = state.auth.userId;
+export const addToFavorites = (recipeId, userId) => async dispatch => {
+  const token = localStorage.getItem("token");
 
   try {
     const response = await fetch(`${API}/favorite-recipes`, {
@@ -792,16 +790,12 @@ export const addToFavorites = recipeId => async (dispatch, getState) => {
   }
 };
 
-export const removeFromFavorites = recipeId => async (dispatch, getState) => {
-  const state = getState();
-  const token = state.auth.token;
-  const userId = state.auth.userId;
-
+export const removeFromFavorites = (recipeId, userId) => async dispatch => {
   try {
     const response = await fetch(`${API}/favorite-recipes/user/${userId}/recipe/${recipeId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 

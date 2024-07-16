@@ -154,7 +154,7 @@ const RecipesPageAuth = () => {
       return;
     }
 
-    if (favoriteRecipes.includes(recipeId)) {
+    if (favoriteRecipes.some(fav => fav.recipe.id === recipeId)) {
       dispatch(removeFromFavorites(recipeId, userId));
     } else {
       dispatch(addToFavorites(recipeId, userId));
@@ -524,7 +524,7 @@ const RecipesPageAuth = () => {
                       className="favorite-icon-overlay position-absolute top-0 end-0 p-2"
                       onClick={() => handleFavoriteToggle(recipe.id)}
                     >
-                      {favoriteRecipes.includes(recipe.id) ? (
+                      {favoriteRecipes.some(fav => fav.recipe.id === recipe.id) ? (
                         <FcLike color="red" size={40} />
                       ) : (
                         <FcLikePlaceholder color="grey" size={40} />

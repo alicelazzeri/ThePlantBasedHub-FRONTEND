@@ -82,7 +82,7 @@ const SingleRecipePage = () => {
   };
 
   const handleFavoriteToggle = () => {
-    if (favoriteRecipes.includes(recipeId)) {
+    if (favoriteRecipes.some(fav => fav.recipeId === recipeId)) {
       dispatch(removeFromFavorites(recipeId, userId));
     } else {
       dispatch(addToFavorites(recipeId, userId));
@@ -105,7 +105,7 @@ const SingleRecipePage = () => {
               <div className="d-flex align-items-center justify-content-start">
                 <h2 className="recipeTitle">{recipe.recipeName}</h2>
                 <div className="favorite-icon position-absolute top-0 end-0 p-2" onClick={handleFavoriteToggle}>
-                  {favoriteRecipes.includes(recipeId) ? (
+                  {favoriteRecipes.some(fav => fav.recipeId === recipeId) ? (
                     <IoIosHeart color="red" size={40} />
                   ) : (
                     <IoIosHeartEmpty color="grey" size={40} />

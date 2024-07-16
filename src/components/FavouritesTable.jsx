@@ -1,11 +1,11 @@
-// src/components/FavouritesTable.jsx
 import React, { useEffect } from "react";
-import { Table, Image, Button } from "react-bootstrap";
+import { Table, Image, Button, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoriteRecipesByUserId, removeFromFavorites } from "../redux/actions";
 import unavailable from "../assets/images/unavailable-recipe.png";
 import { BsTrash3Fill } from "react-icons/bs";
 import { selectFavouriteRecipes } from "../redux/selectors";
+import { Link } from "react-router-dom";
 
 const FavouritesTable = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const FavouritesTable = () => {
   }, [dispatch, userId]);
 
   const handleRemoveFavorite = recipeId => {
-    dispatch(removeFromFavorites(recipeId));
+    dispatch(removeFromFavorites(recipeId, userId));
   };
 
   return (
@@ -32,26 +32,43 @@ const FavouritesTable = () => {
       </thead>
       <tbody>
         {favoriteRecipes.length > 0 ? (
-          favoriteRecipes.map(recipe => (
-            <tr key={recipe.id} className="tableRow">
-              <td>
-                <Image
-                  src={recipe.image || unavailable}
-                  alt={recipe.name}
-                  className="rounded-circle recipeImg"
-                  width={100}
-                  height={100}
-                />
-              </td>
-              <td>{recipe.recipeName}</td>
-              <td>{recipe.recipeCategory}</td>
-              <td>
-                <Button className="deleteBtn" onClick={() => handleRemoveFavorite(recipe.id)}>
-                  <BsTrash3Fill />
-                </Button>
-              </td>
-            </tr>
-          ))
+          favoriteRecipes.map(favorite => {
+            const { recipe } = favorite;
+            return (
+              <tr key={recipe.id} className="tableRow">
+                <td>
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip className="tooltip" id={`tooltip-${recipe.id}`}>
+                        Go to {recipe.recipeName} recipe
+                      </Tooltip>
+                    }
+                  >
+                    <Link to={`/recipe/${recipe.id}`}>
+                      <Image
+                        src={recipe.imageUrl || unavailable}
+                        alt={recipe.recipeName}
+                        className="rounded-circle recipeImg"
+                        width={100}
+                        height={100}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Link>
+                  </OverlayTrigger>
+                </td>
+                <td className="recipeName">{recipe.recipeName}</td>
+                <td>
+                  <Badge className="recipeCategory categoryBadge">{recipe.recipeCategory.replace(/_/g, " ")}</Badge>
+                </td>
+                <td>
+                  <Button className="deleteBtn" onClick={() => handleRemoveFavorite(recipe.id)}>
+                    <BsTrash3Fill />
+                  </Button>
+                </td>
+              </tr>
+            );
+          })
         ) : (
           <tr>
             <td colSpan="5" className="text-center">
