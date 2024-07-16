@@ -3,7 +3,6 @@ import { Table, Image, Button, OverlayTrigger, Tooltip, Badge } from "react-boot
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavoriteRecipesByUserId, removeFromFavorites } from "../redux/actions";
 import unavailable from "../assets/images/unavailable-recipe.png";
-import { BsTrash3Fill } from "react-icons/bs";
 import { selectFavouriteRecipes } from "../redux/selectors";
 import { Link } from "react-router-dom";
 import { FcDislike } from "react-icons/fc";
