@@ -118,6 +118,7 @@ p {
 
 .dropdownItem:hover {
   background-color: #d4dbaf;
+  cursor: pointer;
 }
 
 .navLinks {

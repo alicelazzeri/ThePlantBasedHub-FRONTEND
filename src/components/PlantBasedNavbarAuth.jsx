@@ -104,12 +104,12 @@ const PlantBasedNavbarAuth = ({ userName, onLogout }) => {
                       <Dropdown.Item as="div" disabled className="dropdownItem userNameItem">
                         Hi, {userName}
                       </Dropdown.Item>
-                      <Dropdown.Item as="div">
+                      <Dropdown.Item className="dropdownItem" as="div">
                         <Link className="navLink" to={`/profile/${userId}`}>
                           Your profile
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item as="div">
+                      <Dropdown.Item className="dropdownItem" as="div">
                         <Link className="navLink" to="/favourites">
                           Favourites
                         </Link>
