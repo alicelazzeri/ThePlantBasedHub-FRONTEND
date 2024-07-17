@@ -105,11 +105,19 @@ p {
   text-decoration: none;
   font-weight: bold;
   color: #00602f;
-  transition: color 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .navLink:hover {
   color: #fefefe;
+}
+
+.dropdownItem {
+  transition: all 0.5s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #d4dbaf;
 }
 
 .navLinks {
@@ -970,6 +978,7 @@ input[type="range"]::-ms-track {
 .no-indent {
   list-style-type: none;
   padding-left: 0;
+  margin-left: 0;
 }
 
 .no-indent li {

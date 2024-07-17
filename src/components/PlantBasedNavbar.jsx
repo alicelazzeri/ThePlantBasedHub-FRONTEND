@@ -120,12 +120,12 @@ const PlantBasedNavbar = () => {
                         <BsPersonCircle className="icon-hover accountIcon" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="dropdownMenu">
-                        <Dropdown.Item as="div" onClick={() => setShowOffcanvas(false)}>
+                        <Dropdown.Item className="dropdownItem" as="div" onClick={() => setShowOffcanvas(false)}>
                           <Link className="navLink" to="/login">
                             Login
                           </Link>
                         </Dropdown.Item>
-                        <Dropdown.Item as="div" onClick={() => setShowOffcanvas(false)}>
+                        <Dropdown.Item className="dropdownItem" as="div" onClick={() => setShowOffcanvas(false)}>
                           <Link className="navLink" to="/register">
                             Register
                           </Link>
