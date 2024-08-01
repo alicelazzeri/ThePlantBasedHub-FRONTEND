@@ -12,7 +12,7 @@ const SubmissionModal = props => {
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title className="modalHeader" id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter">
           <img className="modalLogo rounded-circle" src={logo} alt="Logo pic" width={70} height={70} />
           <span className="modalTitle">
             THE <span className="plantBasedSpan">PLANT BASED</span> HUB

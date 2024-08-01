@@ -12,14 +12,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.loading.isLoading);
   const error = useSelector(state => state.auth.error);
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // Add this line to get authentication status
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [isAuthenticated, navigate]); // Use isAuthenticated for navigation
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async event => {
     const form = event.currentTarget;
@@ -64,7 +64,7 @@ const LoginForm = () => {
                 <Row className="mb-3">
                   <Form.Group as={Col} xs={12} controlId="validationCustomPassword">
                     <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
-                      <Form.Control required type="password" placeholder="Password" name="password" />
+                      <Form.Control required placeholder="Password" name="password" type="password" />
                       <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
                     </FloatingLabel>
                   </Form.Group>

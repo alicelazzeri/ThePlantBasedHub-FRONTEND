@@ -31,7 +31,7 @@ const RegisterForm = () => {
       setTimeout(() => {
         setShowToast(false);
         navigate("/");
-      }, 1000);
+      }, 3000);
     }
     setValidated(true);
   };
@@ -76,12 +76,14 @@ const RegisterForm = () => {
                   </Col>
                 </Row>
                 <Row className="mb-3 justify-content-center">
-                  <Form.Group as={Col} xs={12} controlId="validationCustomPassword">
-                    <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
-                      <Form.Control required type="password" placeholder="Password" name="password" />
-                      <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
-                    </FloatingLabel>
-                  </Form.Group>
+                  <Col xs={12}>
+                    <Form.Group controlId="validationCustomPassword">
+                      <FloatingLabel controlId="floatingPassword" label="Password" className="formData">
+                        <Form.Control required placeholder="Password" name="password" type="password" />
+                        <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
+                      </FloatingLabel>
+                    </Form.Group>
+                  </Col>
                 </Row>
                 <Row className="justify-content-center">
                   <Col xs={12} className="d-flex align-items-center checkbox">

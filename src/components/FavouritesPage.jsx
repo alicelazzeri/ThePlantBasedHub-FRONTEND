@@ -13,7 +13,7 @@ const FavouritesPage = () => {
   return (
     <Container className="text-center">
       <div>
-        <h2 className="recipeTitle mt-4 mb-3">MY FAVOURITE RECIPES</h2>
+        <h2 className="recipeTitle my-5">MY FAVOURITE RECIPES</h2>
         {favoriteRecipes.length === 0 ? (
           <>
             <p className="px-5 mt-4 recipeBody">
